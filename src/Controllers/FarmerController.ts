@@ -25,7 +25,7 @@ export let deleteFarmer = async (req: Request, res:Response) =>{
     return res.status(500).send("Delete operation failed")
 }
 export let getFarmers = async (req: Request, res:Response) =>{
-    const query = req.body
+    const query = {}
     const result = await repository.find(query)
     if (result) {
         return res.send(result)

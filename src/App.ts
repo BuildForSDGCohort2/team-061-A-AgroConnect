@@ -13,6 +13,7 @@ app.get("/",(req:Request, res:Response)=>{
 });
 
 const uri:string = 'mongodb://127.0.0.1:27017'
+const uric:string = "mongodb+srv://analogbeichibueze:chibueze321#@cloud-db.amow0.azure.mongodb.net/AgroConnect?retryWrites=true&w=majority"
 mongoose.connect(uri,{useNewUrlParser:true,useUnifiedTopology:true,dbName:"AgroConnect"},
 (err)=>{
     if (err) {
@@ -26,6 +27,7 @@ app.listen(app.get("port"),()=>{
     console.log("Server started at port "+app.get("port"))
 })
 
+app.get("/",(req:Request,res:Response)=>{res.send("<h1>Work in progress</h1>")})
 //API ENDPOINTS
 //Farmer
 app.get("/famrers",farmercontroller.getFarmers);
