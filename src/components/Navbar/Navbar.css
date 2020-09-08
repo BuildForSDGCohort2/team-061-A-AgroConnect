@@ -1,0 +1,24 @@
+.navbar {
+  height: 60px;
+  background-color: #F8AE00;
+}
+
+nav {
+  display: flex;
+  flex-direction: row;
+  justify-content: space-between;
+}
+
+nav > div > ul {
+  list-style-type: none;
+}
+
+.links-group > ul {
+  display: flex;
+  flex-direction: row;
+  justify-content: space-around;
+}
+
+.links-group > ul > li {
+  margin: 0 5px;
+}

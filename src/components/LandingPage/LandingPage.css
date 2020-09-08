@@ -1,0 +1,29 @@
+.landing-page {
+  position: relative;
+}
+
+.buttons-div {
+  /* position: absolute; */
+  display: flex;
+  flex-direction: row;
+  justify-content: space-between;
+}
+
+button {
+  width: 150px;
+  height: 30px;
+  font-size: 1.002em;
+  background-color: #0A7D42;
+  color: yellow;
+}
+
+.button-div {
+  margin: 15px;
+  display: flex;
+  flex-direction: column;
+}
+
+.sales-text {
+  font-size: 2.3em;
+  color: #F8AE00;
+}
