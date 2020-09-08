@@ -9,7 +9,7 @@ app.use(express.json())
 app.set("port",process.env.PORT||8007)
 // app.use()
 app.get("/",(req:Request, res:Response)=>{
-    res.status(200).send("You made it!");
+    res.status(200).send("You made it!\n<h1>Work in progress</h1>");
 });
 
 const uri:string = 'mongodb://127.0.0.1:27017'
@@ -27,7 +27,7 @@ app.listen(app.get("port"),()=>{
     console.log("Server started at port "+app.get("port"))
 })
 
-app.get("/",(req:Request,res:Response)=>{res.send("<h1>Work in progress</h1>")})
+app.post("/",(req:Request,res:Response)=>{res.send("<h1>Work in progress</h1>")})
 //API ENDPOINTS
 //Farmer
 app.get("/famrers",farmercontroller.getFarmers);
