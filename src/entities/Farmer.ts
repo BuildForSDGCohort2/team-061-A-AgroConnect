@@ -12,6 +12,7 @@ class Address{
     public streetAddress!:string;
 }
 export class Farmer{
+    
     @prop({required:true})
     email!:string;
 
@@ -32,8 +33,8 @@ export class Farmer{
     @prop({required:true})
     address!:Address;
 
-    @prop({required:true})
-    niche!:  []
+    @prop({type:String})
+    niche!:string[]
 }
 
 
