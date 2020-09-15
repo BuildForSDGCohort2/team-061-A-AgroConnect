@@ -1,6 +1,8 @@
 import {FarmerRepository} from "../repositories/Farmer.repository"
+import { CustomerRepository } from "../repositories/Customer.repository";
 import { getModelForClass } from "@typegoose/typegoose"
 import { Farmer } from "../entities/Farmer"
+import { Customer } from "../entities/Customer";
 import {Request, Response} from "express"
 import {createResponse} from "../Utils/Response.custom"
 const Farmer_repository = new FarmerRepository(getModelForClass(Farmer))
