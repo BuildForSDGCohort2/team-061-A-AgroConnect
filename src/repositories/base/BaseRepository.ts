@@ -1,7 +1,7 @@
 import {IWrite} from "../interfaces/IWrite";
 import {IRead} from "../interfaces/IRead";
-import { Collection, Model, MongooseDocument } from "mongoose";
-import { getModelForClass } from "@typegoose/typegoose";
+import { Collection, Model, MongooseDocument, Schema } from "mongoose";
+import { getModelForClass, buildSchema } from "@typegoose/typegoose";
 import { Farmer } from "../../entities/Farmer";
 
 export abstract class BaseRepository<T> implements IWrite<T>, IRead<T>{

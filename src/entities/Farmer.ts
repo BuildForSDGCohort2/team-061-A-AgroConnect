@@ -1,5 +1,5 @@
-import {prop, getModelForClass} from "@typegoose/typegoose"
-
+import {prop, getModelForClass, mongoose, Ref} from "@typegoose/typegoose"
+import {Tag} from './Tag'
 
 class Address{
     @prop({required:true})
@@ -11,30 +11,40 @@ class Address{
     @prop({required:true})
     public streetAddress!:string;
 }
+class Rating{
+    @prop({required:true,default:0})
+    public score!:Number
+    @prop({required:true,default:0})
+    public scored!:Number
+}
 export class Farmer{
     
-    @prop({required:true})
-    email!:string;
+    @prop({required:true, unique:true})
+    public email!:string;
 
     @prop({required:true})
-    password!:string;
+    public password!:string;
 
     @prop({required:true})
-    firstname!: string;
+    public firstname!: string;
 
     @prop({required:true})
-    lastname!: string;
+    public lastname!: string;
+
+    @prop({required:true, unique:true})
+    public organization!: string;
 
     @prop({required:true})
-    organization!: string;
+    public phone!: string;
 
-    @prop({required:true})
-    phone!: string;
-    @prop({required:true})
-    address!:Address;
+    @prop({required:true, _id:false})
+    public address!:Address;
 
-    @prop({type:String})
-    niche!:string[]
+    @prop({type:Number,required:true, ref: 'Tag',refType:mongoose.Schema.Types.Number})
+    public niche!:Ref<Tag>[]
+
+    @prop({_id:false})
+    public rating!:Rating
 }
 
 
