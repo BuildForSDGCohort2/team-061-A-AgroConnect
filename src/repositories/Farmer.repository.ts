@@ -1,4 +1,4 @@
-import {BaseRepository} from "./base/BaseRepository";
+import {BaseRepository} from "./base/Base.repository";
 import { Farmer } from "../entities/Farmer";
 import {getModelForClass} from "@typegoose/typegoose";
 

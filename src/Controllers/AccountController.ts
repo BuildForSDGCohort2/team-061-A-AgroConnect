@@ -1,4 +1,4 @@
-import {FarmerRepository} from "../repositories/FarmerRepository"
+import {FarmerRepository} from "../repositories/Farmer.repository"
 import { getModelForClass } from "@typegoose/typegoose"
 import { Farmer } from "../entities/Farmer"
 import {Request, Response} from "express"
