@@ -1,4 +1,4 @@
-import * as accountcontroller from "../Controllers/AccountController"
+import * as accountcontroller from "../Controllers/Account.controller"
 import express, {Request,Response} from "express"
 import {createResponse} from "../Utils/Response.custom"
 export let Account_Router = express.Router()

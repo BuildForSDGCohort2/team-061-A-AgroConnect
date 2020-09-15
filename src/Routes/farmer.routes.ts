@@ -1,10 +1,10 @@
-import * as farmercontroller from "../Controllers/FarmerController"
+import * as farmercontroller from "../Controllers/Farmer.controller"
 import express, {Request,Response} from "express"
 
 export let Farmer_router = express.Router()
 
 Farmer_router.all("/info",(req:Request,res:Response)=>{
-    res.status(200).send("CRUD API endpoints for managing farmer accounts")
+    res.status(200).send("CRUD API endpoints for handling Farmer operations")
 })
 //get host/farmer/
 Farmer_router.get("/",farmercontroller.getAllFarmers)
