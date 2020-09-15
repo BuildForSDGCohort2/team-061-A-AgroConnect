@@ -11,6 +11,7 @@ import {Order_Router} from "./Routes/order.routes"
 import {Product_Router} from "./Routes/product.routes"
 import {Request_Router} from "./Routes/request.routes"
 import {Tag_Router} from "./Routes/tag.routes"
+import { MongoDBAtlasdatabase,MongoDBAtlaspassword,MongoDBAtlasusername } from "./Utils/secret";
 
 const app = express()
 app.use(cors());
@@ -21,9 +22,9 @@ app.get("/",(req:Request, res:Response)=>{
     res.status(200).send("You made it!\n<h1>Work in progress</h1>");
 });
 
-const uri:string = 'mongodb://127.0.0.1:27017'
-const uric:string = "mongodb+srv://analogbeichibueze:atlasclouddb@cloud-db.amow0.azure.mongodb.net/AgroConnect?retryWrites=true&w=majority"
-mongoose.connect(uri,{useNewUrlParser:true,useUnifiedTopology:true,dbName:"AgroConnect"},
+const uri:string = 'mongodb://127.0.0.1:27017' //local
+const uric:string = "mongodb+srv://"+MongoDBAtlasusername+":"+MongoDBAtlaspassword+"-db.amow0.azure.mongodb.net/"+MongoDBAtlasdatabase+"?retryWrites=true&w=majority"
+mongoose.connect(uric,{useNewUrlParser:true,useUnifiedTopology:true,dbName:"AgroConnect"},
 (err)=>{
     if (err) {
         console.log(err.message)
