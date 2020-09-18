@@ -9,47 +9,54 @@ var __metadata = (this && this.__metadata) || function (k, v) {
     if (typeof Reflect === "object" && typeof Reflect.metadata === "function") return Reflect.metadata(k, v);
 };
 Object.defineProperty(exports, "__esModule", { value: true });
-exports.Customer = void 0;
+exports.Farmer = void 0;
 const typegoose_1 = require("@typegoose/typegoose");
-const defaultClasses_1 = require("@typegoose/typegoose/lib/defaultClasses");
-class DeliveryInfo {
+class Address {
 }
 __decorate([
     typegoose_1.prop({ required: true }),
     __metadata("design:type", String)
-], DeliveryInfo.prototype, "country", void 0);
+], Address.prototype, "country", void 0);
 __decorate([
     typegoose_1.prop({ required: true }),
     __metadata("design:type", String)
-], DeliveryInfo.prototype, "state", void 0);
+], Address.prototype, "state", void 0);
 __decorate([
     typegoose_1.prop({ required: true }),
     __metadata("design:type", String)
-], DeliveryInfo.prototype, "streetAddress", void 0);
-__decorate([
-    typegoose_1.prop({ required: true }),
-    __metadata("design:type", String)
-], DeliveryInfo.prototype, "phone", void 0);
-class Customer extends defaultClasses_1.TimeStamps {
+], Address.prototype, "streetAddress", void 0);
+class Farmer {
 }
 __decorate([
-    typegoose_1.prop({ required: true, unique: true }),
+    typegoose_1.prop({ required: true }),
     __metadata("design:type", String)
-], Customer.prototype, "email", void 0);
-__decorate([
-    typegoose_1.prop({ required: true, select: false }),
-    __metadata("design:type", String)
-], Customer.prototype, "password", void 0);
+], Farmer.prototype, "email", void 0);
 __decorate([
     typegoose_1.prop({ required: true }),
     __metadata("design:type", String)
-], Customer.prototype, "firstname", void 0);
+], Farmer.prototype, "password", void 0);
 __decorate([
     typegoose_1.prop({ required: true }),
     __metadata("design:type", String)
-], Customer.prototype, "lastname", void 0);
+], Farmer.prototype, "firstname", void 0);
 __decorate([
-    typegoose_1.prop(),
-    __metadata("design:type", DeliveryInfo)
-], Customer.prototype, "deliveryInfo", void 0);
-exports.Customer = Customer;
+    typegoose_1.prop({ required: true }),
+    __metadata("design:type", String)
+], Farmer.prototype, "lastname", void 0);
+__decorate([
+    typegoose_1.prop({ required: true }),
+    __metadata("design:type", String)
+], Farmer.prototype, "organization", void 0);
+__decorate([
+    typegoose_1.prop({ required: true }),
+    __metadata("design:type", String)
+], Farmer.prototype, "phone", void 0);
+__decorate([
+    typegoose_1.prop({ required: true }),
+    __metadata("design:type", Address)
+], Farmer.prototype, "address", void 0);
+__decorate([
+    typegoose_1.prop({ required: true }),
+    __metadata("design:type", Array)
+], Farmer.prototype, "niche", void 0);
+exports.Farmer = Farmer;

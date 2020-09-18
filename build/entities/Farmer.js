@@ -25,10 +25,20 @@ __decorate([
     typegoose_1.prop({ required: true }),
     __metadata("design:type", String)
 ], Address.prototype, "streetAddress", void 0);
+class Rating {
+}
+__decorate([
+    typegoose_1.prop({ required: true, default: 0 }),
+    __metadata("design:type", Number)
+], Rating.prototype, "score", void 0);
+__decorate([
+    typegoose_1.prop({ required: true, default: 0 }),
+    __metadata("design:type", Number)
+], Rating.prototype, "scored", void 0);
 class Farmer {
 }
 __decorate([
-    typegoose_1.prop({ required: true }),
+    typegoose_1.prop({ required: true, unique: true }),
     __metadata("design:type", String)
 ], Farmer.prototype, "email", void 0);
 __decorate([
@@ -44,7 +54,7 @@ __decorate([
     __metadata("design:type", String)
 ], Farmer.prototype, "lastname", void 0);
 __decorate([
-    typegoose_1.prop({ required: true }),
+    typegoose_1.prop({ required: true, unique: true }),
     __metadata("design:type", String)
 ], Farmer.prototype, "organization", void 0);
 __decorate([
@@ -52,11 +62,15 @@ __decorate([
     __metadata("design:type", String)
 ], Farmer.prototype, "phone", void 0);
 __decorate([
-    typegoose_1.prop({ required: true }),
+    typegoose_1.prop({ required: true, _id: false }),
     __metadata("design:type", Address)
 ], Farmer.prototype, "address", void 0);
 __decorate([
-    typegoose_1.prop({ required: true }),
+    typegoose_1.prop({ type: Number, required: true, ref: 'Tag', refType: typegoose_1.mongoose.Schema.Types.Number }),
     __metadata("design:type", Array)
 ], Farmer.prototype, "niche", void 0);
+__decorate([
+    typegoose_1.prop({ _id: false }),
+    __metadata("design:type", Rating)
+], Farmer.prototype, "rating", void 0);
 exports.Farmer = Farmer;
