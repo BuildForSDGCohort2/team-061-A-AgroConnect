@@ -2,7 +2,7 @@ import {TagRepository} from "../repositories/Tag.repository"
 import {Request, Response} from "express"
 import { Tag } from "../entities/Tag";
 import {getModelForClass} from '@typegoose/typegoose'
-import { Request, Request } from "../entities/Request";
+
 
 
 const repository = new TagRepository(getModelForClass(Tag))
