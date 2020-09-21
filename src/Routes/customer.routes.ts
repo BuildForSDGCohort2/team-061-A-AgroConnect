@@ -5,23 +5,24 @@ export let Customer_router = express.Router()
 
 Customer_router.all("/info",(req:Request,res:Response)=>{
     return createResponse(res,"CRUD API For handling Customer operations",{},200)
-//get host/farmer/
-Customer_router.get("/",farmercontroller.getAllFarmers)
+})
+//get host/customer/
+Customer_router.get("/",customercontroller.getAllCustomers)
 
-// //post host/farmer/
-// router.post("/",farmercontroller.createFarmer)
+// //post host/customer/
+// router.post("/",Customercontroller.createCustomer)
 
-//delete host/farmer/id
+//delete host/customer/id
 Customer_router.delete("/:id", customercontroller.deleteCustomer)
 
-//post host/farmer/update
+//post host/customer/update
 Customer_router.post("/update", customercontroller.updateCustomer)
 
-//get host/farmer/:id
+//get host/customer/:id
 Customer_router.get("/find", customercontroller.getCustomerById)
 
-//post host/farmer/:limit
+//post host/customer/:limit
 Customer_router.post("/:limit", customercontroller.getCustomers)
 
-//post host/farmer/
+//post host/customer/
 Customer_router.post("/", customercontroller.getAllCustomers)

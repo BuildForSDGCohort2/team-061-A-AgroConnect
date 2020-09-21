@@ -39,7 +39,7 @@ export let getTagById = async (req:Request, res:Response) => {
     return res.send(result)
 }
 
-export let getTag = (req: Request, res:Response) => {
+export let getTag = async (req: Request, res:Response) => {
     const query = req.body
     // console.log(query)
     if (req.params.limit !="") {
