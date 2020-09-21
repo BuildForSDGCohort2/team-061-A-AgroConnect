@@ -28,12 +28,14 @@ export let getAllCustomers = async (req:Request, res:Response) => {
     const query = {}
     const result = await repository.find(query)
     if (!result) return res.status(400).send("No customer Available")
+    return res.send(result)
 }
 
 export let getCustomerById = async (req:Request, res:Response) => {
     const id = req.query.id
     const result = await repository.findOne({_id: id})
     if (!result) return res.status(400).send("Invalid Customer")
+    return res.send(result)
 }
 
 export let getCustomers = async (req:Request,res:Response)=>{
@@ -43,7 +45,7 @@ export let getCustomers = async (req:Request,res:Response)=>{
         const limit = Number(req.params.limit)
         const result = await repository.findN(query,limit)
         console.log(result)
-        if(result){
+        if(result) {
             return res.send(result)
         }
     } else {

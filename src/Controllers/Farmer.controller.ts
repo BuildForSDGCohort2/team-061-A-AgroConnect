@@ -6,7 +6,7 @@ import { getModelForClass } from "@typegoose/typegoose"
 const repository = new FarmerRepository(getModelForClass(Farmer))
 
 
-export let deleteFarmer = async (req: Request, res:Response) =>{
+export let deleteFarmer = async (req: Request, res:Response) => {
     const id = req.params.id
     const result = await repository.delete(id)
     if (result) {
