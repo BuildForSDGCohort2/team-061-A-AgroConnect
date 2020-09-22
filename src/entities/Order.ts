@@ -1,6 +1,7 @@
-import {prop, getModelForClass, mongoose, Ref} from "@typegoose/typegoose"
+import {prop, getModelForClass, mongoose, Ref, DocumentType} from "@typegoose/typegoose"
 import {Bid} from './Bid'
 import { Request } from "./Request";
+import {DeliveryInfo} from "./Customer"
 
 enum OrderStatus{
     PLACED = 'Placed',
@@ -21,4 +22,12 @@ export class Order{
 
     @prop({required:true,default:false})
     public complete!:boolean
+
+    @prop({_id:false})
+    public deliveryDetails?:DeliveryInfo
+
+    public async setDeliveryDetailsAndSave(this: DocumentType<Order>,deliveryInfo:DeliveryInfo){
+        this.deliveryDetails = deliveryInfo
+        return await this.save()
+    }
 }

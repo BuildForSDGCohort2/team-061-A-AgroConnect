@@ -1,7 +1,7 @@
 import {prop, getModelForClass} from "@typegoose/typegoose"
 import { TimeStamps } from "@typegoose/typegoose/lib/defaultClasses"
 
-class DeliveryInfo{
+export class DeliveryInfo{
 
     @prop({required:true})
     public country!:string
@@ -32,6 +32,6 @@ export class Customer extends TimeStamps{
     @prop({required:true})
     public lastname!: string;
 
-    @prop()
+    @prop({_id:false})
     public deliveryInfo?:DeliveryInfo
 }
