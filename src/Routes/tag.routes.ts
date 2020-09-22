@@ -7,6 +7,9 @@ Tag_Router.all("/info",(req:Request,res:Response)=>{
     return createResponse(res,"CRUD API For handling Tags for Reuest and niche identification",{},200)
 })
 
+//post host/tag
+Tag_Router.post("",tagcontroller.createTag)
+
 //get host/tag/
 Tag_Router.get("/",tagcontroller.getAllTag)
 
@@ -23,7 +26,7 @@ Tag_Router.post("/update", tagcontroller.updateTag)
 Tag_Router.get("/find", tagcontroller.getTagById)
 
 //post host/tag/:limit
-Tag_Router.post("/:limit", tagcontroller.getTag)
+Tag_Router.post("/:limit", tagcontroller.getNTags)
 
 //post host/tag/
-Tag_Router.post("/", tagcontroller.getAllTag)
+Tag_Router.post("/", tagcontroller.getTags)

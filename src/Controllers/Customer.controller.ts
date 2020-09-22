@@ -38,25 +38,33 @@ export let getCustomerById = async (req:Request, res:Response) => {
     return res.send(result)
 }
 
-export let getCustomers = async (req:Request,res:Response)=>{
+export let getCustomers = async (req: Request, res: Response) => {
+    const query = req.body
+    //console.log(query)
+    const result = await repository.find(query)
+    console.log(Boolean(result))
+    if (result) {
+        console.log("done")
+        return res.send(result)
+    } else {
+        return res.status(404).send({message: "User not found"})
+    }
+}
+
+export let getNCustomers = async (req:Request,res:Response)=>{
     const query = req.body
     // console.log(query)
     if (req.params.limit !="") {
         const limit = Number(req.params.limit)
         const result = await repository.findN(query,limit)
         console.log(result)
-        if(result) {
-            return res.send(result)
-        }
-    } else {
-        const result = await repository.find(query)
-        console.log(Boolean(result))
-        
         if(result){
-            console.log("done")
             return res.send(result)
-        }else{
-            return res.status(404).send({message:"User not found"})
+        } else {
+            return res.status(404).send({message: "User not found"})
         }
-    }
+} else {
+    return res.status(500).send({message: "Parameter not found"})
+}
+
 }

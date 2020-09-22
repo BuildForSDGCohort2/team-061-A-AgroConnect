@@ -44,7 +44,21 @@ export let getFarmerbyId = async (req:Request,res:Response) =>{
         return res.status(404).send("User not found")
     }
 }
-export let getFarmers = async (req:Request,res:Response)=>{
+
+export let getFarmers = async (req: Request, res: Response) => {
+    const query = req.body
+    //console.log(query)
+    const result = await repository.find(query)
+    console.log(Boolean(result))
+    if (result) {
+        console.log("done")
+        return res.send(result)
+    } else {
+        return res.status(404).send({message: "User not found"})
+    }
+}
+
+export let getNFarmers = async (req:Request,res:Response)=>{
     const query = req.body
     // console.log(query)
     if (req.params.limit !="") {
@@ -53,16 +67,11 @@ export let getFarmers = async (req:Request,res:Response)=>{
         console.log(result)
         if(result){
             return res.send(result)
+        } else {
+            return res.status(404).send({message: "User not found"})
         }
-    } else {
-        const result = await repository.find(query)
-        console.log(Boolean(result))
-        
-        if(result){
-            console.log("done")
-            return res.send(result)
-        }else{
-            return res.status(404).send({message:"User not found"})
-        }
-    }
+} else {
+    return res.status(500).send({message: "Parameter not found"})
+}
+
 }

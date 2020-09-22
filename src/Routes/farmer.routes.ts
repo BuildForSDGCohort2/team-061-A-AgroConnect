@@ -22,7 +22,7 @@ Farmer_router.post("/update",farmercontroller.updateFarmer)
 Farmer_router.get("/find",farmercontroller.getFarmerbyId)
 
 //post host/farmer/:limit
-Farmer_router.post("/:limit",farmercontroller.getFarmers)
+Farmer_router.post("/:limit",farmercontroller.getNFarmers)
 
 //post host/farmer/
 Farmer_router.post("/",farmercontroller.getFarmers)

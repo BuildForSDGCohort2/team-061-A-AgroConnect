@@ -22,7 +22,7 @@ Customer_router.post("/update", customercontroller.updateCustomer)
 Customer_router.get("/find", customercontroller.getCustomerById)
 
 //post host/customer/:limit
-Customer_router.post("/:limit", customercontroller.getCustomers)
+Customer_router.post("/:limit", customercontroller.getNCustomers)
 
 //post host/customer/
 Customer_router.post("/", customercontroller.getAllCustomers)
