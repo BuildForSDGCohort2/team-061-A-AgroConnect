@@ -13,8 +13,6 @@ Tag_Router.post("",tagcontroller.createTag)
 //get host/tag/
 Tag_Router.get("/",tagcontroller.getAllTag)
 
-// //post host/tag/
-// router.post("/",tagcontroller.createtag)
 
 //delete host/tag/id
 Tag_Router.delete("/:id", tagcontroller.deleteTag)
