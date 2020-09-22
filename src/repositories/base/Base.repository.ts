@@ -5,7 +5,7 @@ import { getModelForClass, buildSchema } from "@typegoose/typegoose";
 import { Farmer } from "../../entities/Farmer";
 
 export abstract class BaseRepository<T> implements IWrite<T>, IRead<T>{
-    private model:any;
+    public model:any;
     temp = getModelForClass(Farmer)
     constructor (dbcontext:any){
         this.model = dbcontext;
