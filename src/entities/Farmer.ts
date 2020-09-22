@@ -13,9 +13,9 @@ class Address{
 }
 class Rating{
     @prop({required:true,default:0})
-    public score!:Number
+    public score!:number
     @prop({required:true,default:0})
-    public scored!:Number
+    public scored!:number
 }
 export class Farmer{
     
