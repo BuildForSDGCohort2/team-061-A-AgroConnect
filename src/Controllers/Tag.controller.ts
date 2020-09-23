@@ -28,8 +28,8 @@ export let deleteTag = async (req:Request, res:Response) => {
 
 export let updateTag = async (req:Request, res:Response) => {
     const id = String(req.params.id)
-    const updateTag = req.body
-    const result = await repository.update(id, updateTag)
+    const update_tag = req.body
+    const result = await repository.update(id, update_tag)
 
     //Object to update
     if (!result) return res.status(400).send('Bad request. Unable to update')
