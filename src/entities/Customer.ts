@@ -1,4 +1,4 @@
-import {prop, getModelForClass} from "@typegoose/typegoose"
+import {prop} from "@typegoose/typegoose"
 import { TimeStamps } from "@typegoose/typegoose/lib/defaultClasses"
 
 export class DeliveryInfo{

@@ -1,7 +1,7 @@
 import {prop,Ref, getModelForClass, mongoose} from "@typegoose/typegoose"
 import {Farmer} from './Farmer';
 import {Category} from './Category';
-enum StatusEnum{
+export enum StatusEnum{
     NONE = 'None',
     STOCKED = 'Stocked',
     AWAITING = 'Awaiting',
@@ -13,7 +13,7 @@ class Restock{
     public harvestDate?:Date
 
     @prop()
-    public expectedStock?:Number
+    public expectedStock?:number
 
     @prop({type: String, enum:StatusEnum, required:true, default:"None"})
     public status!:StatusEnum
@@ -27,14 +27,14 @@ export class Product{
     public name!:string
 
     @prop({required:true})
-    public price!:Number
+    public price!:number
 
     @prop({required:true,min:1,default:1})
-    public stock?:Number
+    public stock?:number
 
     @prop({required:true,ref:'Category',refType:mongoose.Schema.Types.ObjectId})
     category!: Ref<Category>
 
-    @prop()
+    @prop({_id:false})
     restockDetails?: Restock
 }
