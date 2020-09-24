@@ -7,6 +7,18 @@ import {createResponse} from "../Utils/Response.custom"
 const repository = new RequestRepository(getModelForClass(Request))
 
 
+export let createRequest = async (req: Request, res: Response) => {
+    const Request = req.body
+    const result = await repository.create(Request)
+    if (result) {
+        const newRequest = await repository.findOne({ _id: result })
+        return createResponse(res, "Request created", newRequest, 200)
+    } else {
+        return createResponse(res, "Error creating Request in db", undefined, 500)
+    }
+}
+
+
 
 export let deleteRequest = async (req:Request, res:Response) => {
     const id = req.params.id

@@ -7,6 +7,9 @@ Bid_Router.all("/info",(req:Request,res:Response)=>{
     return createResponse(res,"CRUD API For hBids",{},200)
 })
 
+//post host/bid
+Bid_Router.post("",bidcontroller.createBid)
+
 //get host/bid/
 Bid_Router.get("/",bidcontroller.getAllBid)
 

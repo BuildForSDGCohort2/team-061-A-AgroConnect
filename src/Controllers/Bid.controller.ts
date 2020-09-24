@@ -8,6 +8,17 @@ const repository = new BidRepository(getModelForClass(Bid))
 
 
 
+export let createBid = async (req: Request, res: Response) => {
+    const Bid = req.body
+    const result = await repository.create(Bid)
+    if (result) {
+        const newBid = await repository.findOne({ _id: result })
+        return createResponse(res, "Bid created", newBid, 200)
+    } else {
+        return createResponse(res, "Error creating Bid in db", undefined, 500)
+    }
+}
+
 export let deleteBid = async (req:Request, res:Response) => {
     const id = req.params.id
     const result = await repository.delete(id)

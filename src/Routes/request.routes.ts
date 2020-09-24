@@ -7,6 +7,10 @@ Request_Router.all("/info",(req:Request,res:Response)=>{
     return createResponse(res,"CRUD API For handling User Request operations",{},200)
 })
 
+//post host/request
+Request_Router.post("",requestcontroller.createRequest)
+
+
 //get host/request/
 Request_Router.get("/",requestcontroller.getAllRequest)
 
