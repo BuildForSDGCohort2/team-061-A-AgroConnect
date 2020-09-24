@@ -1,14 +1,16 @@
-import {prop, getModelForClass, mongoose, Ref, DocumentType} from "@typegoose/typegoose"
+import {prop, getModelForClass, mongoose, Ref, DocumentType, pre} from "@typegoose/typegoose"
 import {Bid} from './Bid'
 import { Request } from "./Request";
 import {DeliveryInfo} from "./Customer"
 
-enum OrderStatus{
+export enum OrderStatus{
     PLACED = 'Placed',
     APPROVED = 'Approved',
     DELIVERED = 'Delivered'
 }
-
+@pre<Order>('find',function () {
+    this.populate('request').populate('bid')
+})
 export class Order{
     
     @prop({required:true,ref:'Request',refType:mongoose.Schema.Types.ObjectId})
