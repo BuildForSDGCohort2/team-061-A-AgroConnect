@@ -1,6 +1,8 @@
 import {BaseRepository} from "./base/Base.repository"
 import { Order, OrderStatus } from "../entities/Order";
 import {Customer} from "../entities/Customer"
+import {Bid, EnumBidStatus} from "../entities/Bid";
+import {Request} from "../entities/Request";
 import { getModelForClass } from "@typegoose/typegoose";
 
 export class OrderRepository extends BaseRepository<Order>{
@@ -43,8 +45,8 @@ export class OrderRepository extends BaseRepository<Order>{
         const deliveryInfo = await (getModelForClass(Customer)).findById(customerid,{deliveryInfo:1})
         if (deliveryInfo) {
             if (deliveryInfo.deliveryInfo) {
-                const neworder = await this.create(order)
-                const createdorder = await this.model.findById(neworder)
+                const orderid = await this.create(order)
+                const createdorder = await this.model.findById(orderid)
                 const result = await createdorder?.setDeliveryDetailsAndSave(deliveryInfo.deliveryInfo)
                 if (result) {
                     return result
@@ -56,4 +58,26 @@ export class OrderRepository extends BaseRepository<Order>{
         return null
     }
     //TODO CREATE ORDER FOR SINGLE
+    async createSingleOrder(request:any,bid:any,customerid:any):Promise<Order|null>{
+        let deliveryInfo;
+        const newrequest = await (getModelForClass(Request)).create(request)
+        const bidobj = bid
+        bidobj.request = newrequest._id
+        bidobj.status = EnumBidStatus.ACCEPTED
+        const newbid = await (getModelForClass(Bid)).create(bidobj)
+        const customer = await (getModelForClass(Customer)).findById(customerid,{deliveryInfo:1})
+        if (customer) {
+            deliveryInfo = customer.deliveryInfo
+            if (deliveryInfo) {
+                const order = await this.model.create({request:newrequest._id,bid:newbid._id,status:OrderStatus.PLACED,complete:false})
+                const result = await order.setDeliveryDetailsAndSave(deliveryInfo)
+                if (result) {
+                    return result
+                }
+                return null
+            }
+            return null
+        }
+        return null
+    }
 }
