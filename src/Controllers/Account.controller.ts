@@ -1,11 +1,12 @@
 import {FarmerRepository} from "../repositories/Farmer.repository"
 import { CustomerRepository } from "../repositories/Customer.repository";
 import { getModelForClass } from "@typegoose/typegoose"
-import { Farmer } from "../entities/Farmer"
-import { Customer } from "../entities/Customer";
+import { FarmerModel } from "../entities/Farmer"
+import { CustomerModel } from "../entities/Customer";
 import {Request, Response} from "express"
 import {createResponse} from "../Utils/Response.custom"
-const Farmer_repository = new FarmerRepository(getModelForClass(Farmer))
+const Farmer_repository = new FarmerRepository(FarmerModel)
+const Customer_repository = new CustomerRepository(CustomerModel)
 
 export let Login = async (req:Request,res:Response) =>{
     const type = req.body.type
@@ -21,6 +22,13 @@ export let Login = async (req:Request,res:Response) =>{
             return createResponse(res,"User not found",{},404)
         }
     }else if (type == "Customer"){
+        const customer = await Customer_repository.findOne(query)
+        if (customer) {
+            customer.password = ""
+            return createResponse(res,"Login Successfull",customer,200)
+        }else{
+            return createResponse(res,"User not found",{},404)
+        }
 
     }
 }

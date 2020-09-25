@@ -33,3 +33,5 @@ export class Order{
         return await this.save()
     }
 }
+
+export let OrderModel = getModelForClass(Order)

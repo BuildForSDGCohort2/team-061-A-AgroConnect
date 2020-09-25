@@ -1,4 +1,4 @@
-import {prop} from "@typegoose/typegoose"
+import {getModelForClass, prop} from "@typegoose/typegoose"
 import { TimeStamps } from "@typegoose/typegoose/lib/defaultClasses"
 
 export class DeliveryInfo{
@@ -35,3 +35,5 @@ export class Customer extends TimeStamps{
     @prop({_id:false})
     public deliveryInfo?:DeliveryInfo
 }
+
+export let CustomerModel = getModelForClass(Customer)

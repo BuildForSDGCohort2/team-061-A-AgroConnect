@@ -9,3 +9,5 @@ export class Category{
     @prop({required:true})
     public name!:string
 }
+
+export let CategoryModel = getModelForClass(Category)

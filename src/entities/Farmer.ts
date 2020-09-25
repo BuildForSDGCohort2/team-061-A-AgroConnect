@@ -47,6 +47,7 @@ export class Farmer{
     public rating!:Rating
 }
 
+export let FarmerModel = getModelForClass(Farmer)
 
 
 

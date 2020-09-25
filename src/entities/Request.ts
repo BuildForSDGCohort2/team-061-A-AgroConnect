@@ -45,3 +45,5 @@ export class Request{
     @prop({required:true,enum:EnumType})
     public type!:EnumType
 }
+
+export let RequestModel = getModelForClass(Request)

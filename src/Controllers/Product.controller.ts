@@ -1,10 +1,10 @@
 import { ProductRepository } from "../repositories/Product.repository"
 import { Request, Response } from "express"
-import { Product } from "../entities/Product";
+import { ProductModel } from "../entities/Product";
 import { getModelForClass } from "@typegoose/typegoose";
 import {createResponse} from "../Utils/Response.custom";
 
-const repository = new ProductRepository(getModelForClass(Product))
+const repository = new ProductRepository(ProductModel)
 
 export let createProduct = async (req: Request, res: Response) =>{
     const product = req.body

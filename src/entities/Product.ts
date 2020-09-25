@@ -38,3 +38,5 @@ export class Product{
     @prop({_id:false})
     restockDetails?: Restock
 }
+
+export let ProductModel = getModelForClass(Product)

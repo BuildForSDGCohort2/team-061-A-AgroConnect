@@ -11,7 +11,7 @@ class PriceItem{
     @prop({required:true})
     public price!:number
 }
-enum EnumsStatus{
+export enum EnumBidStatus{
     ACCEPTED = 'Accepted',
     REJECTED = 'Rejected',
     AWAITING = "Awaiting"
@@ -32,9 +32,11 @@ export class Bid extends TimeStamps{
     @prop()
     public total?:number
 
-    @prop({required:true,default:EnumsStatus.AWAITING,enum:EnumsStatus})
-    public status!:EnumsStatus
+    @prop({required:true,default:EnumBidStatus.AWAITING,enum:EnumBidStatus})
+    public status!:EnumBidStatus
 
     @prop({required:true,ref:'Request',refType:mongoose.Schema.Types.ObjectId})
     public request!:Ref<Request>
 }
+
+export let BidModel = getModelForClass(Bid)

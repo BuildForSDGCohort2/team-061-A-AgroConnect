@@ -14,3 +14,5 @@ export class Tag{
     @prop({required:true})
     public name!:string
 }
+
+export let TagModel = getModelForClass(Tag)
