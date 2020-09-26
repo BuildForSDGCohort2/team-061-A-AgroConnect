@@ -41,12 +41,26 @@ export let createFarmer = async (req: Request, res: Response) =>{
         const result = await Farmer_repository.create(farmer)
         // console.log(result);
         if (result) {
-            const newFarmer = await Farmer_repository.findOne(result)
+            const newFarmer = await Farmer_repository.findOne({_id:result})
             // console.log(newFarmer)
             return createResponse(res,"User Created Successfully",newFarmer,200)
         }
         return createResponse(res,"Problem creating user",{},500)
     }
     
+}
+export let createCustomer = async (req:Request, res:Response) =>{
+    const customer = req.body
+    const existing = await Customer_repository.findOne({email:customer.email})
+    if (existing){
+        return createResponse(res,"User with email exists already",{},500)
+    }else{
+        const result = await Customer_repository.create(customer)
+        if (result) {
+            const newCustomer = await Customer_repository.findOne({_id:result})
+            return createResponse(res,"User Created Successfully",newCustomer,200)
+        }
+        return createResponse(res,"Problem creating user",{},500)
+    }
 }
 // export let retrievePassword
