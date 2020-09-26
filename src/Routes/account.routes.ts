@@ -13,3 +13,6 @@ Account_Router.post("/login",accountcontroller.Login)
 
 //post host/account/farmer
 Account_Router.post("/farmer",accountcontroller.createFarmer)
+
+//post host/account/customer
+Account_Router.post("/customer",accountcontroller.createCustomer)

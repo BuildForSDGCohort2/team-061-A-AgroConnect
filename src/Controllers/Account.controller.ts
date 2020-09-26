@@ -12,11 +12,14 @@ export let Login = async (req:Request,res:Response) =>{
     const type = req.body.type
     const email = req.body.email
     const pass = req.body.password
+    if(email.length<0 || pass.length<0){
+        return createResponse(res,"Invalid login credentials",{},502)
+    }
     const query = {email:email,password:pass}
     if (type == "Farmer") {
         const farmer = await Farmer_repository.findOne(query)
         if (farmer) {
-            farmer.password = ""
+            // farmer.password = ""
             return createResponse(res,"Login Successfull",farmer,200)
         }else{
             return createResponse(res,"User not found",{},404)
