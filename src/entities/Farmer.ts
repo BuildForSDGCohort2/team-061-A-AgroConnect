@@ -43,7 +43,7 @@ export class Farmer{
     @prop({type:Number,required:true, ref: 'Tag',refType:mongoose.Schema.Types.Number})
     public niche!:Ref<Tag>[]
 
-    @prop({_id:false})
+    @prop({_id:false,default:{score:0,scored:0}})
     public rating!:Rating
 }
 

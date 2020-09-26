@@ -3,11 +3,11 @@ import { Farmer } from "../entities/Farmer";
 import {getModelForClass, ReturnModelType} from "@typegoose/typegoose";
 
 export class FarmerRepository extends BaseRepository<Farmer>{
-    model = getModelForClass(Farmer)
+    // model = getModelForClass(Farmer)
 
     //TODO: GET BY NICHE
     async getFarmersbyNiche(Niche:string[]):Promise<Farmer[]>{
-        const result = this.model.find().populate("niche","name").in("niche",Niche)
+        const result = await this.model.find().populate("niche","name").where("niche.name").in(Niche)
         // const result = await this.model.find({niche:{$in:Niche}})
         return result
     }
@@ -28,13 +28,13 @@ export class FarmerRepository extends BaseRepository<Farmer>{
     }
 
     //TODO: Rate a farmer
-    async rateFarmer(id:string,rating:number):Promise<Farmer|null>{
+    async rateFarmer(id:string,rating:number):Promise<any|null>{
         const result = await this.model.findById(id)
         if(result){
             result.rating.score+=rating;
             result.rating.scored+=1
             const newresult = await result.save()
-            return newresult
+            return newresult.rating
         }else{
             return null
         }

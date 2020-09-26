@@ -2,6 +2,8 @@ import {FarmerRepository} from "../repositories/Farmer.repository"
 import {Request, Response} from "express"
 import { Farmer } from "../entities/Farmer"
 import { getModelForClass } from "@typegoose/typegoose"
+import { capitalizeFirstLetterOnly } from "../Utils/string.utils"
+import { createResponse } from "../Utils/Response.custom"
 
 const repository = new FarmerRepository(getModelForClass(Farmer))
 
@@ -49,7 +51,7 @@ export let getFarmers = async (req: Request, res: Response) => {
     // console.log(query)
     const result = await repository.find(query)
     console.log(Boolean(result))
-    if (result) {
+    if (result.length>0) {
         console.log("done")
         return res.send(result)
     } else {
@@ -58,11 +60,11 @@ export let getFarmers = async (req: Request, res: Response) => {
 }
 export let getNFarmers = async (req: Request, res:Response)=>{
     const query = req.body
-    if (req.params.limit !="") {
+    if (req.params.limit !="" && !isNaN(Number(req.params.limit))) {
         const limit = Number(req.params.limit)
         const result = await repository.findN(query,limit)
         console.log(result)
-        if(result){
+        if(result.length>0){
             return res.send(result)
         }else{
             return res.status(404).send({message:"User not found"})
@@ -70,6 +72,45 @@ export let getNFarmers = async (req: Request, res:Response)=>{
     }else{
         return res.status(500).send({message:"Parameter not found"})
     }
+}
+export let getFarmerByCountryAndState = async (req:Request,res:Response) => {
+    const country = capitalizeFirstLetterOnly(String(req.query.country))
+    const state = capitalizeFirstLetterOnly(String(req.query.state))
+    let result:any
+    if (country&&state) {
+         result = await repository.getFarmersinCountryandState(country,state)
+    }else if(country){
+        result = await repository.getFarmersinCountry(country)
+    }
+    if (result.length>0) {
+        return createResponse(res,"Users found",result,200)
+    }
+    return createResponse(res,"Users not found",undefined,404)
+}
+export let rateFarmer = async (req:Request,res:Response) => {
+    const farmerid = req.body.id
+    const rating = req.body.rating
+    const result = await repository.rateFarmer(farmerid,rating)
+    if (Boolean(result)) {
+        return createResponse(res,"Farmer rated",result,200)
+    }
+    return createResponse(res,"Error updating rating",{},500)
+}
+export let searchOrganization = async (req:Request,res:Response) => {
+    const org:string = String(req.query.q)
+    const result = await repository.searchByOrganization(org)
+    if (Boolean(result)) {
+        createResponse(res,"Search results",result,200)
+    }
+    createResponse(res,"Error occured during search",{},500)
+}
+export let getFarmerByNiche = async (req:Request,res:Response) => {
+    const niches:string[] = req.body.niches
+    const result = await repository.getFarmersbyNiche(niches)
+    if (result.length>0) {
+        createResponse(res,"Farmers found",result,200)
+    }
+    createResponse(res,"no results available",undefined,404)
 }
 // ! OLD version, used the 2 function version, update all that have the same pattern
 // export let getFarmers = async (req:Request,res:Response)=>{
