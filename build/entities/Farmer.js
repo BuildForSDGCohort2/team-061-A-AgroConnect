@@ -9,7 +9,7 @@ var __metadata = (this && this.__metadata) || function (k, v) {
     if (typeof Reflect === "object" && typeof Reflect.metadata === "function") return Reflect.metadata(k, v);
 };
 Object.defineProperty(exports, "__esModule", { value: true });
-exports.Farmer = void 0;
+exports.FarmerModel = exports.Farmer = void 0;
 const typegoose_1 = require("@typegoose/typegoose");
 class Address {
 }
@@ -25,10 +25,20 @@ __decorate([
     typegoose_1.prop({ required: true }),
     __metadata("design:type", String)
 ], Address.prototype, "streetAddress", void 0);
+class Rating {
+}
+__decorate([
+    typegoose_1.prop({ required: true, default: 0 }),
+    __metadata("design:type", Number)
+], Rating.prototype, "score", void 0);
+__decorate([
+    typegoose_1.prop({ required: true, default: 0 }),
+    __metadata("design:type", Number)
+], Rating.prototype, "scored", void 0);
 class Farmer {
 }
 __decorate([
-    typegoose_1.prop({ required: true }),
+    typegoose_1.prop({ required: true, unique: true }),
     __metadata("design:type", String)
 ], Farmer.prototype, "email", void 0);
 __decorate([
@@ -44,7 +54,7 @@ __decorate([
     __metadata("design:type", String)
 ], Farmer.prototype, "lastname", void 0);
 __decorate([
-    typegoose_1.prop({ required: true }),
+    typegoose_1.prop({ required: true, unique: true }),
     __metadata("design:type", String)
 ], Farmer.prototype, "organization", void 0);
 __decorate([
@@ -52,11 +62,17 @@ __decorate([
     __metadata("design:type", String)
 ], Farmer.prototype, "phone", void 0);
 __decorate([
-    typegoose_1.prop({ required: true }),
+    typegoose_1.prop({ required: true, _id: false }),
     __metadata("design:type", Address)
 ], Farmer.prototype, "address", void 0);
 __decorate([
-    typegoose_1.prop({ required: true }),
+    typegoose_1.prop({ type: Number, required: true, ref: 'Tag', refType: typegoose_1.mongoose.Schema.Types.Number }),
     __metadata("design:type", Array)
 ], Farmer.prototype, "niche", void 0);
+__decorate([
+    typegoose_1.prop({ _id: false, default: { score: 0, scored: 0 } }),
+    __metadata("design:type", Rating)
+], Farmer.prototype, "rating", void 0);
 exports.Farmer = Farmer;
+exports.FarmerModel = typegoose_1.getModelForClass(Farmer);
+//# sourceMappingURL=Farmer.js.map

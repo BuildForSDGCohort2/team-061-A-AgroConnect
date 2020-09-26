@@ -6,3 +6,4 @@
 // })
 // export const AccountDBContext = typedModel("Account",AccountSchema);
 // export type Account = ExtractDoc<typeof AccountSchema>;
+//# sourceMappingURL=Account.js.map
