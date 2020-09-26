@@ -21,3 +21,11 @@ Product_Router.post("/find/:limit",productcontroller.getNProducts)
 Product_Router.post("/update",productcontroller.updateProduct)
 //delete host/product/:id
 Product_Router.delete("/:id",productcontroller.deleteProduct)
+//post host/product/farmer
+Product_Router.post("/farmer",productcontroller.getProductsByFarmer)
+//post host/product/stock
+Product_Router.post("/stock",productcontroller.restockProduct)
+//post host/product/stock/status
+Product_Router.post("/stock/status",productcontroller.updateRestockStatus)
+//post host/product/category
+Product_Router.post("/category",productcontroller.getProductsByCategory)

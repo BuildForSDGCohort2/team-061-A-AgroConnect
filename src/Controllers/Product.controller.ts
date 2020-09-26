@@ -9,7 +9,7 @@ const repository = new ProductRepository(ProductModel)
 export let createProduct = async (req: Request, res: Response) =>{
     const product = req.body
     const result = await repository.create(product)
-    if (result) {
+    if (Boolean(result)) {
         const newProduct = await repository.findOne({_id:result})
         return createResponse(res,"Product created",newProduct,200)
     }else{
@@ -27,7 +27,7 @@ export let deleteProduct = async (req: Request, res: Response) => {
 export let getAllProducts = async (req: Request, res: Response) => {
     const query = {}
     const result = await repository.find(query)
-    if (result) {
+    if (result.length>0) {
         return createResponse(res,"Products found",result,200)
     }
     return createResponse(res,"Fatal error occured",undefined,500)
@@ -59,7 +59,7 @@ export let getProducts = async (req: Request, res: Response) => {
     // console.log(query)
     const result = await repository.find(query)
     console.log(Boolean(result))
-    if (result) {
+    if (result.length>0) {
         console.log("done")
         return createResponse(res,"Products found",result,200)
     } else {
@@ -68,16 +68,51 @@ export let getProducts = async (req: Request, res: Response) => {
 }
 export let getNProducts = async (req: Request, res:Response)=>{
     const query = req.body
-    if (req.params.limit !="") {
+    if (req.params.limit !="" && !isNaN(Number(req.params.limit))) {
         const limit = Number(req.params.limit)
         const result = await repository.findN(query,limit)
         console.log(result)
-        if(result){
-            return res.send(result)
+        if(result.length>0){
+            return createResponse(res,"Products found",result,200)
         }else{
             return createResponse(res,"products not found",undefined,404)
         }
     }else{
         return createResponse(res,"Parameter not found",undefined,500)
     }
+}
+export let getProductsByFarmer = async (req: Request, res:Response) => {
+    const farmerid = req.body.id
+    const result = await repository.getProductsByFarmer(farmerid)
+    if (Boolean(result)) {
+        return createResponse(res,"Products found",result,200)
+    }
+    return createResponse(res,"Error getting products",{},500)
+}
+export let restockProduct = async (req: Request, res:Response) => {
+    const productid = req.body.id
+    const stock = Number(req.body.stock)
+    const harvest = new Date(req.body.harvest)
+    const result = await repository.restockProducts(productid,stock,harvest)
+    if (Boolean(result)) {
+        return createResponse(res,"Stock details updated",result,200)
+    }
+    return createResponse(res,"Error updating stock details",{},500)
+}
+export let updateRestockStatus = async (req: Request, res:Response) => {
+    const productid = req.body.id
+    const status = String(req.body.status)
+    const result = await repository.updateRestockStatus(productid,status)
+    if (Boolean(result)) {
+        return createResponse(res,"Stock details updated",result,200)
+    }
+    return createResponse(res,"Error updating stock details",{},500)
+}
+export let getProductsByCategory = async (req: Request, res:Response) => {
+    const categories:string[] = req.body.category
+    const result = await repository.getProductsByCategory(categories)
+    if (result.length>0) {
+        return createResponse(res,"Products found",result,200)
+    }
+    return createResponse(res,"Products not found/error occured",[],404)
 }
