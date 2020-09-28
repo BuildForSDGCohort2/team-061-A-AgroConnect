@@ -9,8 +9,8 @@ Farmer_router.all("/info",(req:Request,res:Response)=>{
 //get host/farmer
 Farmer_router.get("",farmercontroller.getAllFarmers)
 
-// //post host/farmer/
-// router.post("/",farmercontroller.createFarmer)
+//post host/farmer/tags
+Farmer_router.post("/tags",farmercontroller.getFarmerByNiche)
 
 //delete host/farmer/id
 Farmer_router.delete("/:id",farmercontroller.deleteFarmer)
@@ -21,20 +21,18 @@ Farmer_router.post("/update",farmercontroller.updateFarmer)
 //get host/farmer/:id
 Farmer_router.get("/find",farmercontroller.getFarmerbyId)
 
-//post host/farmer/:limit
-Farmer_router.post("/:limit",farmercontroller.getNFarmers)
 
 //post host/farmer
 Farmer_router.post("",farmercontroller.getFarmers)
 
 //get host/farmer/location
-Farmer_router.get("/locaton",farmercontroller.getFarmerByCountryAndState)
+Farmer_router.get("/location",farmercontroller.getFarmerByCountryAndState)
 
 //get host/farmer/organization
 Farmer_router.get("/organization",farmercontroller.searchOrganization)
 
 //post host/farmer/rate
-Farmer_router.post("/rate",farmercontroller.rateFarmer)
+Farmer_router.put("/rate",farmercontroller.rateFarmer)
 
-//post host/farmer/tags
-Farmer_router.post("/tags",farmercontroller.rateFarmer)
+//post host/farmer/:limit
+Farmer_router.post("/:limit",farmercontroller.getNFarmers)

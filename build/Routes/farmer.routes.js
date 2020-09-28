@@ -44,11 +44,11 @@ exports.Farmer_router.post("/:limit", farmercontroller.getNFarmers);
 //post host/farmer
 exports.Farmer_router.post("", farmercontroller.getFarmers);
 //get host/farmer/location
-exports.Farmer_router.get("/locaton", farmercontroller.getFarmerByCountryAndState);
+exports.Farmer_router.get("/location", farmercontroller.getFarmerByCountryAndState);
 //get host/farmer/organization
 exports.Farmer_router.get("/organization", farmercontroller.searchOrganization);
 //post host/farmer/rate
-exports.Farmer_router.post("/rate", farmercontroller.rateFarmer);
+exports.Farmer_router.put("/rate", farmercontroller.rateFarmer);
 //post host/farmer/tags
 exports.Farmer_router.post("/tags", farmercontroller.rateFarmer);
 //# sourceMappingURL=farmer.routes.js.map

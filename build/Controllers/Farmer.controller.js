@@ -87,8 +87,8 @@ exports.getNFarmers = (req, res) => __awaiter(void 0, void 0, void 0, function* 
     }
 });
 exports.getFarmerByCountryAndState = (req, res) => __awaiter(void 0, void 0, void 0, function* () {
-    const country = string_utils_1.capitalizeFirstLetterOnly(String(req.query.country));
-    const state = string_utils_1.capitalizeFirstLetterOnly(String(req.query.state));
+    const country = string_utils_1.capitalizeFirstLetterOnly(req.query.country);
+    const state = string_utils_1.capitalizeFirstLetterOnly(req.query.state);
     let result;
     if (country && state) {
         result = yield repository.getFarmersinCountryandState(country, state);
@@ -111,12 +111,13 @@ exports.rateFarmer = (req, res) => __awaiter(void 0, void 0, void 0, function* (
     return Response_custom_1.createResponse(res, "Error updating rating", {}, 500);
 });
 exports.searchOrganization = (req, res) => __awaiter(void 0, void 0, void 0, function* () {
+    // TODO search case insensitive
     const org = String(req.query.q);
     const result = yield repository.searchByOrganization(org);
     if (Boolean(result)) {
-        Response_custom_1.createResponse(res, "Search results", result, 200);
+        return Response_custom_1.createResponse(res, "Search results", result, 200);
     }
-    Response_custom_1.createResponse(res, "Error occured during search", {}, 500);
+    return Response_custom_1.createResponse(res, "Error occured during search", {}, 500);
 });
 exports.getFarmerByNiche = (req, res) => __awaiter(void 0, void 0, void 0, function* () {
     const niches = req.body.niches;

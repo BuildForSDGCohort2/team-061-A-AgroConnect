@@ -3,13 +3,18 @@ import { Farmer } from "../entities/Farmer";
 import {getModelForClass, ReturnModelType} from "@typegoose/typegoose";
 
 export class FarmerRepository extends BaseRepository<Farmer>{
-    // model = getModelForClass(Farmer)
+    model = getModelForClass(Farmer)
 
     //TODO: GET BY NICHE
     async getFarmersbyNiche(Niche:string[]):Promise<Farmer[]>{
-        const result = await this.model.find().populate("niche","name").where("niche.name").in(Niche)
+        try {
+            const result = await this.model.find().populate("niche","name").where("niche.name").in(Niche)
         // const result = await this.model.find({niche:{$in:Niche}})
-        return result
+            return result
+        } catch (error) {
+            console.log(error)
+            return []
+        }
     }
     //TODO: GET BY COUNTRY
     async getFarmersinCountry(country:string):Promise<Farmer[]>{
@@ -23,8 +28,14 @@ export class FarmerRepository extends BaseRepository<Farmer>{
     }
     //TODO: FIND/Search BY ORG
     async searchByOrganization(organization:string):Promise<Farmer[]>{
-       const result = await this.model.find({organization:/organization/i})
-       return result
+       try {
+        const result = await this.model.aggregate([{$match:{$expr:{$gt:[{$indexOfCP:["$organization",organization]},-1]}}},{$project:{password:0}}])
+        return result
+       } catch (error) {
+           console.log(error)
+           return []
+       }
+        
     }
 
     //TODO: Rate a farmer

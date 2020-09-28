@@ -74,8 +74,8 @@ export let getNFarmers = async (req: Request, res:Response)=>{
     }
 }
 export let getFarmerByCountryAndState = async (req:Request,res:Response) => {
-    const country = capitalizeFirstLetterOnly(String(req.query.country))
-    const state = capitalizeFirstLetterOnly(String(req.query.state))
+    const country = capitalizeFirstLetterOnly(req.query.country)
+    const state = capitalizeFirstLetterOnly(req.query.state)
     let result:any
     if (country&&state) {
          result = await repository.getFarmersinCountryandState(country,state)
@@ -97,12 +97,13 @@ export let rateFarmer = async (req:Request,res:Response) => {
     return createResponse(res,"Error updating rating",{},500)
 }
 export let searchOrganization = async (req:Request,res:Response) => {
+    // TODO search case insensitive
     const org:string = String(req.query.q)
     const result = await repository.searchByOrganization(org)
     if (Boolean(result)) {
-        createResponse(res,"Search results",result,200)
+        return createResponse(res,"Search results",result,200)
     }
-    createResponse(res,"Error occured during search",{},500)
+    return createResponse(res,"Error occured during search",{},500)
 }
 export let getFarmerByNiche = async (req:Request,res:Response) => {
     const niches:string[] = req.body.niches

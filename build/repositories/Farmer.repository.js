@@ -11,14 +11,25 @@ var __awaiter = (this && this.__awaiter) || function (thisArg, _arguments, P, ge
 Object.defineProperty(exports, "__esModule", { value: true });
 exports.FarmerRepository = void 0;
 const Base_repository_1 = require("./base/Base.repository");
+const Farmer_1 = require("../entities/Farmer");
+const typegoose_1 = require("@typegoose/typegoose");
 class FarmerRepository extends Base_repository_1.BaseRepository {
-    // model = getModelForClass(Farmer)
+    constructor() {
+        super(...arguments);
+        this.model = typegoose_1.getModelForClass(Farmer_1.Farmer);
+    }
     //TODO: GET BY NICHE
     getFarmersbyNiche(Niche) {
         return __awaiter(this, void 0, void 0, function* () {
-            const result = yield this.model.find().populate("niche", "name").where("niche.name").in(Niche);
-            // const result = await this.model.find({niche:{$in:Niche}})
-            return result;
+            try {
+                const result = yield this.model.find().populate("niche", "name").where("niche.name").in(Niche);
+                // const result = await this.model.find({niche:{$in:Niche}})
+                return result;
+            }
+            catch (error) {
+                console.log(error);
+                return [];
+            }
         });
     }
     //TODO: GET BY COUNTRY
@@ -38,8 +49,14 @@ class FarmerRepository extends Base_repository_1.BaseRepository {
     //TODO: FIND/Search BY ORG
     searchByOrganization(organization) {
         return __awaiter(this, void 0, void 0, function* () {
-            const result = yield this.model.find({ organization: /organization/i });
-            return result;
+            try {
+                const result = yield this.model.aggregate([{ $match: { $expr: { $gt: [{ $indexOfCP: ["$organization", organization] }, -1] } } }, { $project: { password: 0 } }]);
+                return result;
+            }
+            catch (error) {
+                console.log(error);
+                return [];
+            }
         });
     }
     //TODO: Rate a farmer
