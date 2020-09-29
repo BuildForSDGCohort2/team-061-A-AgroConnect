@@ -1,6 +1,7 @@
 import {prop,Ref, getModelForClass, mongoose} from "@typegoose/typegoose"
 import {Farmer} from './Farmer';
 import {Category} from './Category';
+
 enum StatusEnum{
     NONE = 'None',
     STOCKED = 'Stocked',

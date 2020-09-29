@@ -11,7 +11,7 @@ class PriceItem{
     @prop({required:true})
     public price!:number
 }
-enum EnumsStatus{
+export enum EnumsStatus{
     ACCEPTED = 'Accepted',
     REJECTED = 'Rejected',
     AWAITING = "Awaiting"
