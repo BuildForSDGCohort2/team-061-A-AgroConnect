@@ -22,8 +22,9 @@ class FarmerRepository extends Base_repository_1.BaseRepository {
     getFarmersbyNiche(Niche) {
         return __awaiter(this, void 0, void 0, function* () {
             try {
-                const result = yield this.model.find().populate("niche", "name").where("niche.name").in(Niche);
-                // const result = await this.model.find({niche:{$in:Niche}})
+                let result = yield this.model.find({ niche: { $in: Niche } }).populate("niche", "name");
+                //  result = result.where("niche").in(Niche)
+                // const result = await this.model.find()
                 return result;
             }
             catch (error) {

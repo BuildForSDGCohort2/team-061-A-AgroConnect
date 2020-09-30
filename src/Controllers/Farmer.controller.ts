@@ -106,12 +106,15 @@ export let searchOrganization = async (req:Request,res:Response) => {
     return createResponse(res,"Error occured during search",{},500)
 }
 export let getFarmerByNiche = async (req:Request,res:Response) => {
-    const niches:string[] = req.body.niches
+    const niches:number[] = req.body.niches
+    if(!(niches.length>0)){
+        return createResponse(res,"no results available",undefined,404)
+    }
     const result = await repository.getFarmersbyNiche(niches)
     if (result.length>0) {
-        createResponse(res,"Farmers found",result,200)
+        return createResponse(res,"Farmers found",result,200)
     }
-    createResponse(res,"no results available",undefined,404)
+    return createResponse(res,"no results available",undefined,404)
 }
 // ! OLD version, used the 2 function version, update all that have the same pattern
 // export let getFarmers = async (req:Request,res:Response)=>{

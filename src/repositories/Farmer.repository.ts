@@ -6,10 +6,11 @@ export class FarmerRepository extends BaseRepository<Farmer>{
     model = getModelForClass(Farmer)
 
     //TODO: GET BY NICHE
-    async getFarmersbyNiche(Niche:string[]):Promise<Farmer[]>{
+    async getFarmersbyNiche(Niche:number[]):Promise<Farmer[]>{
         try {
-            const result = await this.model.find().populate("niche","name").where("niche.name").in(Niche)
-        // const result = await this.model.find({niche:{$in:Niche}})
+            let result = await this.model.find({niche:{$in:Niche}}).populate("niche","name")
+            //  result = result.where("niche").in(Niche)
+        // const result = await this.model.find()
             return result
         } catch (error) {
             console.log(error)

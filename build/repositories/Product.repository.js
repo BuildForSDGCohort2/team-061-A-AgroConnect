@@ -12,11 +12,15 @@ Object.defineProperty(exports, "__esModule", { value: true });
 exports.ProductRepository = void 0;
 const Base_repository_1 = require("./base/Base.repository");
 const Product_1 = require("../entities/Product");
+const typegoose_1 = require("@typegoose/typegoose");
 class ProductRepository extends Base_repository_1.BaseRepository {
-    // model = getModelForClass(Product)
+    constructor() {
+        super(...arguments);
+        this.model = typegoose_1.getModelForClass(Product_1.Product);
+    }
     getProductsByFarmer(id) {
         return __awaiter(this, void 0, void 0, function* () {
-            const result = yield this.model.find({ farmerID: id }).populate("category", "name");
+            const result = yield this.model.find({ farmerID: id }); //.populate("category","name")
             return result;
         });
     }
@@ -60,7 +64,15 @@ class ProductRepository extends Base_repository_1.BaseRepository {
                             product.restockDetails.status = Product_1.StatusEnum.AWAITING;
                             break;
                         case "stocked":
-                            product.restockDetails.status = Product_1.StatusEnum.STOCKED;
+                            if (product.restockDetails.expectedStock) {
+                                product.restockDetails.status = Product_1.StatusEnum.STOCKED;
+                                if (product.stock) {
+                                    product.stock += product.restockDetails.expectedStock;
+                                }
+                                else {
+                                    product.stock = product.restockDetails.expectedStock;
+                                }
+                            }
                             break;
                         case "unfulfilled":
                             product.restockDetails.status = Product_1.StatusEnum.UNFULFILLED;

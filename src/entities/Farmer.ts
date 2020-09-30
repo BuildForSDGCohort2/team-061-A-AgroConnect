@@ -1,4 +1,4 @@
-import {prop, getModelForClass, mongoose, Ref} from "@typegoose/typegoose"
+import {prop, getModelForClass, mongoose, Ref, pre} from "@typegoose/typegoose"
 import {Tag} from './Tag'
 
 class Address{
@@ -17,6 +17,9 @@ class Rating{
     @prop({required:true,default:0})
     public scored!:number
 }
+// @pre<Farmer>('find',function(){
+//     this.populate("niche","name")
+// })
 export class Farmer{
     
     @prop({required:true, unique:true})

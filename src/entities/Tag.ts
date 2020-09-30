@@ -9,7 +9,7 @@ import {prop, getModelForClass, mongoose, Ref, plugin} from "@typegoose/typegoos
 // @plugin(AutoIncrementID,{})
 export class Tag{
     @prop({required:true,min:1})
-    public _id!:Number;
+    public _id!:number;
 
     @prop({required:true})
     public name!:string

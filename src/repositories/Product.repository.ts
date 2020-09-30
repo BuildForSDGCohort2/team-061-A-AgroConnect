@@ -4,10 +4,10 @@ import { getModelForClass } from "@typegoose/typegoose";
 
 export class ProductRepository extends BaseRepository<Product>{
  
-    // model = getModelForClass(Product)
+    model = getModelForClass(Product)
 
     async getProductsByFarmer(id:any):Promise<Product[]> {
-        const result = await this.model.find({farmerID:id}).populate("category","name")
+        const result = await this.model.find({farmerID:id})//.populate("category","name")
         return result
     }
 
@@ -46,7 +46,14 @@ export class ProductRepository extends BaseRepository<Product>{
                         product.restockDetails.status = StatusEnum.AWAITING
                         break;
                     case "stocked":
-                        product.restockDetails.status = StatusEnum.STOCKED
+                        if(product.restockDetails.expectedStock){
+                            product.restockDetails.status = StatusEnum.STOCKED
+                            if(product.stock){
+                                product.stock+=product.restockDetails.expectedStock
+                            }else{
+                                product.stock = product.restockDetails.expectedStock
+                            }   
+                        } 
                         break;
                     case "unfulfilled":
                         product.restockDetails.status = StatusEnum.UNFULFILLED

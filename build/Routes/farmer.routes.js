@@ -31,16 +31,14 @@ exports.Farmer_router.all("/info", (req, res) => {
 });
 //get host/farmer
 exports.Farmer_router.get("", farmercontroller.getAllFarmers);
-// //post host/farmer/
-// router.post("/",farmercontroller.createFarmer)
+//post host/farmer/tags
+exports.Farmer_router.post("/tags", farmercontroller.getFarmerByNiche);
 //delete host/farmer/id
 exports.Farmer_router.delete("/:id", farmercontroller.deleteFarmer);
 //post host/farmer/update
 exports.Farmer_router.post("/update", farmercontroller.updateFarmer);
 //get host/farmer/:id
 exports.Farmer_router.get("/find", farmercontroller.getFarmerbyId);
-//post host/farmer/:limit
-exports.Farmer_router.post("/:limit", farmercontroller.getNFarmers);
 //post host/farmer
 exports.Farmer_router.post("", farmercontroller.getFarmers);
 //get host/farmer/location
@@ -49,6 +47,6 @@ exports.Farmer_router.get("/location", farmercontroller.getFarmerByCountryAndSta
 exports.Farmer_router.get("/organization", farmercontroller.searchOrganization);
 //post host/farmer/rate
 exports.Farmer_router.put("/rate", farmercontroller.rateFarmer);
-//post host/farmer/tags
-exports.Farmer_router.post("/tags", farmercontroller.rateFarmer);
+//post host/farmer/:limit
+exports.Farmer_router.post("/:limit", farmercontroller.getNFarmers);
 //# sourceMappingURL=farmer.routes.js.map

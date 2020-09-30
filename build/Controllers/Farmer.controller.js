@@ -121,11 +121,14 @@ exports.searchOrganization = (req, res) => __awaiter(void 0, void 0, void 0, fun
 });
 exports.getFarmerByNiche = (req, res) => __awaiter(void 0, void 0, void 0, function* () {
     const niches = req.body.niches;
+    if (!(niches.length > 0)) {
+        return Response_custom_1.createResponse(res, "no results available", undefined, 404);
+    }
     const result = yield repository.getFarmersbyNiche(niches);
     if (result.length > 0) {
-        Response_custom_1.createResponse(res, "Farmers found", result, 200);
+        return Response_custom_1.createResponse(res, "Farmers found", result, 200);
     }
-    Response_custom_1.createResponse(res, "no results available", undefined, 404);
+    return Response_custom_1.createResponse(res, "no results available", undefined, 404);
 });
 // ! OLD version, used the 2 function version, update all that have the same pattern
 // export let getFarmers = async (req:Request,res:Response)=>{

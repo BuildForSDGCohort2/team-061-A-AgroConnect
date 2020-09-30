@@ -35,6 +35,9 @@ __decorate([
     typegoose_1.prop({ required: true, default: 0 }),
     __metadata("design:type", Number)
 ], Rating.prototype, "scored", void 0);
+// @pre<Farmer>('find',function(){
+//     this.populate("niche","name")
+// })
 class Farmer {
 }
 __decorate([
