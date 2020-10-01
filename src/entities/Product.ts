@@ -20,7 +20,7 @@ class Restock{
 }
 
 export class Product{
-    @prop({required:true, ref: 'Farmer',refType:mongoose.Schema.Types.ObjectId})
+    @prop({required:true, ref:()=> Farmer,type:mongoose.Schema.Types.ObjectId})
     farmerID!:Ref<Farmer>
 
     @prop({required:true})
@@ -32,7 +32,7 @@ export class Product{
     @prop({required:true,min:1,default:1})
     public stock?:number
 
-    @prop({required:true,ref:'Category',refType:mongoose.Schema.Types.ObjectId})
+    @prop({required:true,ref:()=>Category,type:mongoose.Schema.Types.ObjectId})
     category!: Ref<Category>
 
     @prop({_id:false})

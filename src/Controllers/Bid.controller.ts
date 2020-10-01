@@ -1,10 +1,10 @@
 import { BidRepository } from "../repositories/Bid.repository"
 import { Request, Response } from "express"
-import { Bid } from "../entities/Bid";
+import { Bid, BidModel } from "../entities/Bid";
 import { getModelForClass } from '@typegoose/typegoose'
 import { createResponse } from "../Utils/Response.custom"
 
-const repository = new BidRepository(getModelForClass(Bid))
+const repository = new BidRepository(BidModel)
 
 
 

@@ -11,6 +11,8 @@ var __metadata = (this && this.__metadata) || function (k, v) {
 Object.defineProperty(exports, "__esModule", { value: true });
 exports.ProductModel = exports.Product = exports.StatusEnum = void 0;
 const typegoose_1 = require("@typegoose/typegoose");
+const Farmer_1 = require("./Farmer");
+const Category_1 = require("./Category");
 var StatusEnum;
 (function (StatusEnum) {
     StatusEnum["NONE"] = "None";
@@ -35,7 +37,7 @@ __decorate([
 class Product {
 }
 __decorate([
-    typegoose_1.prop({ required: true, ref: 'Farmer', refType: typegoose_1.mongoose.Schema.Types.ObjectId }),
+    typegoose_1.prop({ required: true, ref: () => Farmer_1.Farmer, type: typegoose_1.mongoose.Schema.Types.ObjectId }),
     __metadata("design:type", Object)
 ], Product.prototype, "farmerID", void 0);
 __decorate([
@@ -51,7 +53,7 @@ __decorate([
     __metadata("design:type", Number)
 ], Product.prototype, "stock", void 0);
 __decorate([
-    typegoose_1.prop({ required: true, ref: 'Category', refType: typegoose_1.mongoose.Schema.Types.ObjectId }),
+    typegoose_1.prop({ required: true, ref: () => Category_1.Category, type: typegoose_1.mongoose.Schema.Types.ObjectId }),
     __metadata("design:type", Object)
 ], Product.prototype, "category", void 0);
 __decorate([

@@ -1,10 +1,10 @@
 import { CustomerRepository } from "../repositories/Customer.repository"
 import { Request, Response } from "express"
-import { Customer } from "../entities/Customer";
+import { Customer, CustomerModel } from "../entities/Customer";
 import { getModelForClass } from "@typegoose/typegoose";
 import { createResponse } from "../Utils/Response.custom";
 
-const repository = new CustomerRepository(getModelForClass(Customer))
+const repository = new CustomerRepository(CustomerModel)
 
 export let deleteCustomer = async (req: Request, res: Response) => {
     const id = req.params.id

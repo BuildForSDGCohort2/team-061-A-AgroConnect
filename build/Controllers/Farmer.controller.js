@@ -12,62 +12,54 @@ Object.defineProperty(exports, "__esModule", { value: true });
 exports.getFarmerByNiche = exports.searchOrganization = exports.rateFarmer = exports.getFarmerByCountryAndState = exports.getNFarmers = exports.getFarmers = exports.getFarmerbyId = exports.updateFarmer = exports.getAllFarmers = exports.deleteFarmer = void 0;
 const Farmer_repository_1 = require("../repositories/Farmer.repository");
 const Farmer_1 = require("../entities/Farmer");
-const typegoose_1 = require("@typegoose/typegoose");
 const string_utils_1 = require("../Utils/string.utils");
 const Response_custom_1 = require("../Utils/Response.custom");
-const repository = new Farmer_repository_1.FarmerRepository(typegoose_1.getModelForClass(Farmer_1.Farmer));
+const repository = new Farmer_repository_1.FarmerRepository(Farmer_1.FarmerModel);
 exports.deleteFarmer = (req, res) => __awaiter(void 0, void 0, void 0, function* () {
     const id = req.params.id;
     const result = yield repository.delete(id);
     if (result) {
-        return res.send("Deleted " + id + " successfully");
+        return Response_custom_1.createResponse(res, `Delete ${id} Successfully`, undefined, 200);
     }
-    return res.status(500).send("Delete operation failed");
+    else {
+        return Response_custom_1.createResponse(res, "Delete Operation Failed", undefined, 500);
+    }
 });
 exports.getAllFarmers = (req, res) => __awaiter(void 0, void 0, void 0, function* () {
     const query = {};
     const result = yield repository.find(query);
     if (result) {
-        return res.send(result);
+        return Response_custom_1.createResponse(res, "Farmers found", result, 200);
     }
-    return res.status(500).send("Fatal error occured");
+    return Response_custom_1.createResponse(res, "Farmers not found", undefined, 404);
 });
 exports.updateFarmer = (req, res) => __awaiter(void 0, void 0, void 0, function* () {
     const id = String(req.query.id);
     const update = req.body;
     const result = yield repository.update(id, update);
-    if (Boolean(result)) {
-        console.log(result.firstname);
-        return res.send(result);
+    if (result) {
+        return Response_custom_1.createResponse(res, "Farmer updated", result, 200);
     }
-    else {
-        return res.status(404).send("User not found");
-    }
+    return Response_custom_1.createResponse(res, "Farmer not found", undefined, 404);
 });
 exports.getFarmerbyId = (req, res) => __awaiter(void 0, void 0, void 0, function* () {
     const id = req.query.id;
     const result = yield repository.findOne({ _id: id });
     // console.log(Boolean(result))
-    if (Boolean(result)) {
-        console.log(result.firstname);
-        return res.send(result);
+    if (result) {
+        return Response_custom_1.createResponse(res, "Farmer found", result, 200);
     }
-    else {
-        return res.status(404).send("User not found");
-    }
+    return Response_custom_1.createResponse(res, "Farmer not found", undefined, 404);
 });
 exports.getFarmers = (req, res) => __awaiter(void 0, void 0, void 0, function* () {
     const query = req.body;
     // console.log(query)
     const result = yield repository.find(query);
-    console.log(Boolean(result));
-    if (result.length > 0) {
-        console.log("done");
-        return res.send(result);
+    // console.log(Boolean(result))
+    if (result) {
+        return Response_custom_1.createResponse(res, "Farmers found", result, 200);
     }
-    else {
-        return res.status(404).send({ message: "User not found" });
-    }
+    return Response_custom_1.createResponse(res, "Farmers not found", undefined, 404);
 });
 exports.getNFarmers = (req, res) => __awaiter(void 0, void 0, void 0, function* () {
     const query = req.body;
@@ -75,15 +67,13 @@ exports.getNFarmers = (req, res) => __awaiter(void 0, void 0, void 0, function* 
         const limit = Number(req.params.limit);
         const result = yield repository.findN(query, limit);
         console.log(result);
-        if (result.length > 0) {
-            return res.send(result);
+        if (result) {
+            return Response_custom_1.createResponse(res, "Farmers found", result, 200);
         }
-        else {
-            return res.status(404).send({ message: "User not found" });
-        }
+        return Response_custom_1.createResponse(res, "Farmers not found", undefined, 404);
     }
     else {
-        return res.status(500).send({ message: "Parameter not found" });
+        return Response_custom_1.createResponse(res, "Parameter not found", undefined, 500);
     }
 });
 exports.getFarmerByCountryAndState = (req, res) => __awaiter(void 0, void 0, void 0, function* () {
@@ -96,16 +86,21 @@ exports.getFarmerByCountryAndState = (req, res) => __awaiter(void 0, void 0, voi
     else if (country) {
         result = yield repository.getFarmersinCountry(country);
     }
-    if (result.length > 0) {
-        return Response_custom_1.createResponse(res, "Users found", result, 200);
+    if (result) {
+        if (result.length > 0) {
+            return Response_custom_1.createResponse(res, "Users found", result, 200);
+        }
+        return Response_custom_1.createResponse(res, "Users not found", undefined, 404);
     }
-    return Response_custom_1.createResponse(res, "Users not found", undefined, 404);
+    else {
+        return Response_custom_1.createResponse(res, "Error Occured", undefined, 500);
+    }
 });
 exports.rateFarmer = (req, res) => __awaiter(void 0, void 0, void 0, function* () {
     const farmerid = req.body.id;
     const rating = req.body.rating;
     const result = yield repository.rateFarmer(farmerid, rating);
-    if (Boolean(result)) {
+    if (result) {
         return Response_custom_1.createResponse(res, "Farmer rated", result, 200);
     }
     return Response_custom_1.createResponse(res, "Error updating rating", {}, 500);
@@ -114,7 +109,7 @@ exports.searchOrganization = (req, res) => __awaiter(void 0, void 0, void 0, fun
     // TODO search case insensitive
     const org = String(req.query.q);
     const result = yield repository.searchByOrganization(org);
-    if (Boolean(result)) {
+    if (result) {
         return Response_custom_1.createResponse(res, "Search results", result, 200);
     }
     return Response_custom_1.createResponse(res, "Error occured during search", {}, 500);
@@ -125,31 +120,14 @@ exports.getFarmerByNiche = (req, res) => __awaiter(void 0, void 0, void 0, funct
         return Response_custom_1.createResponse(res, "no results available", undefined, 404);
     }
     const result = yield repository.getFarmersbyNiche(niches);
-    if (result.length > 0) {
-        return Response_custom_1.createResponse(res, "Farmers found", result, 200);
+    if (result) {
+        if (result.length > 0) {
+            return Response_custom_1.createResponse(res, "Farmers found", result, 200);
+        }
+        return Response_custom_1.createResponse(res, "no results available", undefined, 404);
     }
-    return Response_custom_1.createResponse(res, "no results available", undefined, 404);
+    else {
+        return Response_custom_1.createResponse(res, "Error Ocuured", undefined, 500);
+    }
 });
-// ! OLD version, used the 2 function version, update all that have the same pattern
-// export let getFarmers = async (req:Request,res:Response)=>{
-//     const query = req.body
-//     // console.log(query)
-//     if (req.params.limit !="") {
-//         const limit = Number(req.params.limit)
-//         const result = await repository.findN(query,limit)
-//         console.log(result)
-//         if(result){
-//             return res.send(result)
-//         }
-//     } else {
-//         const result = await repository.find(query)
-//         console.log(Boolean(result))
-//         if(result){
-//             console.log("done")
-//             return res.send(result)
-//         }else{
-//             return res.status(404).send({message:"User not found"})
-//         }
-//     }
-// }
 //# sourceMappingURL=Farmer.controller.js.map

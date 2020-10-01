@@ -11,6 +11,8 @@ var __metadata = (this && this.__metadata) || function (k, v) {
 Object.defineProperty(exports, "__esModule", { value: true });
 exports.RequestModel = exports.Request = void 0;
 const typegoose_1 = require("@typegoose/typegoose");
+const Customer_1 = require("./Customer");
+const Tag_1 = require("./Tag");
 class Requestproduct {
 }
 __decorate([
@@ -33,7 +35,7 @@ var EnumType;
 let Request = class Request {
 };
 __decorate([
-    typegoose_1.prop({ required: true, ref: 'Customer', refType: typegoose_1.mongoose.Schema.Types.ObjectId }),
+    typegoose_1.prop({ required: true, ref: () => Customer_1.Customer, type: typegoose_1.mongoose.Schema.Types.ObjectId }),
     __metadata("design:type", Object)
 ], Request.prototype, "customer", void 0);
 __decorate([
@@ -41,7 +43,7 @@ __decorate([
     __metadata("design:type", Array)
 ], Request.prototype, "products", void 0);
 __decorate([
-    typegoose_1.prop({ type: Number, ref: 'Tag', refType: typegoose_1.mongoose.Schema.Types.Number }),
+    typegoose_1.prop({ ref: () => Tag_1.Tag, type: typegoose_1.mongoose.Schema.Types.Number }),
     __metadata("design:type", Array)
 ], Request.prototype, "tags", void 0);
 __decorate([

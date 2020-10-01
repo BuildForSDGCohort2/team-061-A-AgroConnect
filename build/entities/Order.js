@@ -20,6 +20,8 @@ var __awaiter = (this && this.__awaiter) || function (thisArg, _arguments, P, ge
 Object.defineProperty(exports, "__esModule", { value: true });
 exports.OrderModel = exports.Order = exports.OrderStatus = void 0;
 const typegoose_1 = require("@typegoose/typegoose");
+const Bid_1 = require("./Bid");
+const Request_1 = require("./Request");
 const Customer_1 = require("./Customer");
 var OrderStatus;
 (function (OrderStatus) {
@@ -36,11 +38,11 @@ let Order = class Order {
     }
 };
 __decorate([
-    typegoose_1.prop({ required: true, ref: 'Request', refType: typegoose_1.mongoose.Schema.Types.ObjectId }),
+    typegoose_1.prop({ required: true, ref: () => Request_1.Request, type: typegoose_1.mongoose.Schema.Types.ObjectId }),
     __metadata("design:type", Object)
 ], Order.prototype, "request", void 0);
 __decorate([
-    typegoose_1.prop({ required: true, ref: 'Bid', refType: typegoose_1.mongoose.Schema.Types.ObjectId }),
+    typegoose_1.prop({ required: true, ref: () => Bid_1.Bid, type: typegoose_1.mongoose.Schema.Types.ObjectId }),
     __metadata("design:type", Object)
 ], Order.prototype, "bid", void 0);
 __decorate([

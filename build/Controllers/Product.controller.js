@@ -29,15 +29,18 @@ exports.deleteProduct = (req, res) => __awaiter(void 0, void 0, void 0, function
     const id = req.params.id;
     const result = yield repository.delete(id);
     if (result) {
-        return res.send("Deleted " + id + " successfully");
+        return Response_custom_1.createResponse(res, `Deleted ${id} Successfully`, undefined, 200);
     }
-    return res.status(500).send("Delete operation failed");
+    return Response_custom_1.createResponse(res, "Delete Operation Failed", undefined, 500);
 });
 exports.getAllProducts = (req, res) => __awaiter(void 0, void 0, void 0, function* () {
     const query = {};
     const result = yield repository.find(query);
-    if (result.length > 0) {
-        return Response_custom_1.createResponse(res, "Products found", result, 200);
+    if (result) {
+        if (result.length > 0) {
+            return Response_custom_1.createResponse(res, "Products found", result, 200);
+        }
+        return Response_custom_1.createResponse(res, "Fatal error occured", undefined, 500);
     }
     return Response_custom_1.createResponse(res, "Fatal error occured", undefined, 500);
 });
@@ -50,7 +53,7 @@ exports.updateProduct = (req, res) => __awaiter(void 0, void 0, void 0, function
         return Response_custom_1.createResponse(res, "Product found", result, 200);
     }
     else {
-        return Response_custom_1.createResponse(res, "Product not found", undefined, 404);
+        return Response_custom_1.createResponse(res, "Product not found/updated", undefined, 404);
     }
 });
 exports.getProductbyId = (req, res) => __awaiter(void 0, void 0, void 0, function* () {
@@ -69,27 +72,33 @@ exports.getProducts = (req, res) => __awaiter(void 0, void 0, void 0, function* 
     const query = req.body;
     // console.log(query)
     const result = yield repository.find(query);
-    console.log(Boolean(result));
-    if (result.length > 0) {
-        console.log("done");
-        return Response_custom_1.createResponse(res, "Products found", result, 200);
+    // console.log(Boolean(result))
+    if (result) {
+        if (result.length > 0) {
+            // console.log("done")
+            return Response_custom_1.createResponse(res, "Products found", result, 200);
+        }
+        else {
+            return Response_custom_1.createResponse(res, "Products not found", undefined, 404);
+        }
     }
-    else {
-        return Response_custom_1.createResponse(res, "Products not found", undefined, 404);
-    }
+    return Response_custom_1.createResponse(res, "Fatal error occured", undefined, 500);
 });
 exports.getNProducts = (req, res) => __awaiter(void 0, void 0, void 0, function* () {
     const query = req.body;
     if (req.params.limit != "" && !isNaN(Number(req.params.limit))) {
         const limit = Number(req.params.limit);
         const result = yield repository.findN(query, limit);
-        console.log(result);
-        if (result.length > 0) {
-            return Response_custom_1.createResponse(res, "Products found", result, 200);
+        // console.log(result)
+        if (result) {
+            if (result.length > 0) {
+                return Response_custom_1.createResponse(res, "Products found", result, 200);
+            }
+            else {
+                return Response_custom_1.createResponse(res, "products not found", undefined, 404);
+            }
         }
-        else {
-            return Response_custom_1.createResponse(res, "products not found", undefined, 404);
-        }
+        return Response_custom_1.createResponse(res, "Parameter not found", undefined, 500);
     }
     else {
         return Response_custom_1.createResponse(res, "Parameter not found", undefined, 500);
@@ -101,7 +110,7 @@ exports.getProductsByFarmer = (req, res) => __awaiter(void 0, void 0, void 0, fu
     if (Boolean(result)) {
         return Response_custom_1.createResponse(res, "Products found", result, 200);
     }
-    return Response_custom_1.createResponse(res, "Error getting products", {}, 500);
+    return Response_custom_1.createResponse(res, "Error getting products", undefined, 500);
 });
 exports.restockProduct = (req, res) => __awaiter(void 0, void 0, void 0, function* () {
     const productid = req.body.id;
@@ -111,7 +120,7 @@ exports.restockProduct = (req, res) => __awaiter(void 0, void 0, void 0, functio
     if (Boolean(result)) {
         return Response_custom_1.createResponse(res, "Stock details updated", result, 200);
     }
-    return Response_custom_1.createResponse(res, "Error updating stock details", {}, 500);
+    return Response_custom_1.createResponse(res, "Error updating stock details", undefined, 500);
 });
 exports.updateRestockStatus = (req, res) => __awaiter(void 0, void 0, void 0, function* () {
     const productid = req.body.id;
@@ -120,14 +129,17 @@ exports.updateRestockStatus = (req, res) => __awaiter(void 0, void 0, void 0, fu
     if (Boolean(result)) {
         return Response_custom_1.createResponse(res, "Stock details updated", result, 200);
     }
-    return Response_custom_1.createResponse(res, "Error updating stock details", {}, 500);
+    return Response_custom_1.createResponse(res, "Error updating stock details", undefined, 500);
 });
 exports.getProductsByCategory = (req, res) => __awaiter(void 0, void 0, void 0, function* () {
     const categories = req.body.category;
     const result = yield repository.getProductsByCategory(categories);
-    if (result.length > 0) {
-        return Response_custom_1.createResponse(res, "Products found", result, 200);
+    if (result) {
+        if (result.length > 0) {
+            return Response_custom_1.createResponse(res, "Products found", result, 200);
+        }
+        return Response_custom_1.createResponse(res, "Products not found/error occured", undefined, 404);
     }
-    return Response_custom_1.createResponse(res, "Products not found/error occured", [], 404);
+    return Response_custom_1.createResponse(res, "Error updating stock details", undefined, 500);
 });
 //# sourceMappingURL=Product.controller.js.map

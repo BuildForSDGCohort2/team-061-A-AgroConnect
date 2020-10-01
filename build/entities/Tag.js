@@ -10,15 +10,15 @@ var __metadata = (this && this.__metadata) || function (k, v) {
 };
 Object.defineProperty(exports, "__esModule", { value: true });
 exports.TagModel = exports.Tag = void 0;
+const auto_increment_1 = require("@typegoose/auto-increment");
 const typegoose_1 = require("@typegoose/typegoose");
 /**
  * Use for niche i.e, more specific than
  * category.
  * e.g orange,apple,cow,pig,fish,etc
  */
-// @plugin(AutoIncrementID,{})
-class Tag {
-}
+let Tag = class Tag {
+};
 __decorate([
     typegoose_1.prop({ required: true, min: 1 }),
     __metadata("design:type", Number)
@@ -27,6 +27,9 @@ __decorate([
     typegoose_1.prop({ required: true }),
     __metadata("design:type", String)
 ], Tag.prototype, "name", void 0);
+Tag = __decorate([
+    typegoose_1.plugin(auto_increment_1.AutoIncrementID, {})
+], Tag);
 exports.Tag = Tag;
 exports.TagModel = typegoose_1.getModelForClass(Tag);
 //# sourceMappingURL=Tag.js.map

@@ -25,13 +25,13 @@ enum EnumType{
 })
 export class Request{
 
-    @prop({required:true, ref:'Customer',refType:mongoose.Schema.Types.ObjectId})
+    @prop({required:true, ref:()=>Customer,type:mongoose.Schema.Types.ObjectId})
     public customer!: Ref<Customer>
 
     @prop({required:true,type:Requestproduct})
     public products!: Requestproduct[]
 
-    @prop({type:Number,ref:'Tag',refType:mongoose.Schema.Types.Number})
+    @prop({ref:()=>Tag,type:mongoose.Schema.Types.Number})
     public tags?: Ref<Tag>[]
 
     @prop({maxlength:123})

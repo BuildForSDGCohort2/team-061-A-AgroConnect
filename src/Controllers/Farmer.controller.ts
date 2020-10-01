@@ -1,11 +1,11 @@
 import {FarmerRepository} from "../repositories/Farmer.repository"
 import {Request, Response} from "express"
-import { Farmer } from "../entities/Farmer"
+import { Farmer, FarmerModel } from "../entities/Farmer"
 import { getModelForClass } from "@typegoose/typegoose"
 import { capitalizeFirstLetterOnly } from "../Utils/string.utils"
 import { createResponse } from "../Utils/Response.custom"
 
-const repository = new FarmerRepository(getModelForClass(Farmer))
+const repository = new FarmerRepository(FarmerModel)
 
 
 export let deleteFarmer = async (req: Request, res:Response) => {

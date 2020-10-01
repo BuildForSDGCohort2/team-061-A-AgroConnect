@@ -11,6 +11,7 @@ var __metadata = (this && this.__metadata) || function (k, v) {
 Object.defineProperty(exports, "__esModule", { value: true });
 exports.FarmerModel = exports.Farmer = void 0;
 const typegoose_1 = require("@typegoose/typegoose");
+const Tag_1 = require("./Tag");
 class Address {
 }
 __decorate([
@@ -69,7 +70,7 @@ __decorate([
     __metadata("design:type", Address)
 ], Farmer.prototype, "address", void 0);
 __decorate([
-    typegoose_1.prop({ type: Number, required: true, ref: 'Tag', refType: typegoose_1.mongoose.Schema.Types.Number }),
+    typegoose_1.prop({ required: true, ref: () => Tag_1.Tag, type: typegoose_1.mongoose.Schema.Types.Number }),
     __metadata("design:type", Array)
 ], Farmer.prototype, "niche", void 0);
 __decorate([

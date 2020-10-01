@@ -22,7 +22,7 @@ exports.Login = (req, res) => __awaiter(void 0, void 0, void 0, function* () {
     const email = req.body.email;
     const pass = req.body.password;
     if (email.length < 0 || pass.length < 0) {
-        return Response_custom_1.createResponse(res, "Invalid login credentials", {}, 502);
+        return Response_custom_1.createResponse(res, "Invalid login credentials", undefined, 502);
     }
     const query = { email: email, password: pass };
     if (type == "Farmer") {
@@ -32,7 +32,7 @@ exports.Login = (req, res) => __awaiter(void 0, void 0, void 0, function* () {
             return Response_custom_1.createResponse(res, "Login Successfull", farmer, 200);
         }
         else {
-            return Response_custom_1.createResponse(res, "User not found", {}, 404);
+            return Response_custom_1.createResponse(res, "User not found", undefined, 404);
         }
     }
     else if (type == "Customer") {
@@ -42,7 +42,7 @@ exports.Login = (req, res) => __awaiter(void 0, void 0, void 0, function* () {
             return Response_custom_1.createResponse(res, "Login Successfull", customer, 200);
         }
         else {
-            return Response_custom_1.createResponse(res, "User not found", {}, 404);
+            return Response_custom_1.createResponse(res, "User not found", undefined, 404);
         }
     }
 });
@@ -50,7 +50,7 @@ exports.createFarmer = (req, res) => __awaiter(void 0, void 0, void 0, function*
     const farmer = req.body;
     const existing = yield Farmer_repository.findOne({ email: farmer.email });
     if (existing) {
-        return Response_custom_1.createResponse(res, "User with email Exists Already", {}, 500);
+        return Response_custom_1.createResponse(res, "User with email Exists Already", undefined, 500);
     }
     else {
         const result = yield Farmer_repository.create(farmer);
@@ -60,14 +60,14 @@ exports.createFarmer = (req, res) => __awaiter(void 0, void 0, void 0, function*
             // console.log(newFarmer)
             return Response_custom_1.createResponse(res, "User Created Successfully", newFarmer, 200);
         }
-        return Response_custom_1.createResponse(res, "Problem creating user", {}, 500);
+        return Response_custom_1.createResponse(res, "Problem creating user", undefined, 500);
     }
 });
 exports.createCustomer = (req, res) => __awaiter(void 0, void 0, void 0, function* () {
     const customer = req.body;
     const existing = yield Customer_repository.findOne({ email: customer.email });
     if (existing) {
-        return Response_custom_1.createResponse(res, "User with email exists already", {}, 500);
+        return Response_custom_1.createResponse(res, "User with email exists already", undefined, 500);
     }
     else {
         const result = yield Customer_repository.create(customer);
@@ -75,7 +75,7 @@ exports.createCustomer = (req, res) => __awaiter(void 0, void 0, void 0, functio
             const newCustomer = yield Customer_repository.findOne({ _id: result });
             return Response_custom_1.createResponse(res, "User Created Successfully", newCustomer, 200);
         }
-        return Response_custom_1.createResponse(res, "Problem creating user", {}, 500);
+        return Response_custom_1.createResponse(res, "Problem creating user", undefined, 500);
     }
 });
 // export let retrievePassword

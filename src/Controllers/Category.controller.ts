@@ -1,10 +1,10 @@
 import { CategoryRepository } from "../repositories/Category.repository"
 import { Request, Response } from "express"
-import { Category } from "../entities/Category";
+import { Category, CategoryModel } from "../entities/Category";
 import { getModelForClass } from '@typegoose/typegoose'
 import { createResponse } from "../Utils/Response.custom"
 
-const repository = new CategoryRepository(getModelForClass(Category))
+const repository = new CategoryRepository(CategoryModel)
 
 
 export let createCategory = async (req: Request, res: Response) => {

@@ -11,6 +11,8 @@ var __metadata = (this && this.__metadata) || function (k, v) {
 Object.defineProperty(exports, "__esModule", { value: true });
 exports.BidModel = exports.Bid = exports.EnumBidStatus = void 0;
 const typegoose_1 = require("@typegoose/typegoose");
+const Farmer_1 = require("./Farmer");
+const Request_1 = require("./Request");
 const defaultClasses_1 = require("@typegoose/typegoose/lib/defaultClasses");
 class PriceItem {
 }
@@ -31,7 +33,7 @@ var EnumBidStatus;
 let Bid = class Bid extends defaultClasses_1.TimeStamps {
 };
 __decorate([
-    typegoose_1.prop({ required: true, ref: 'Farmer', refType: typegoose_1.mongoose.Schema.Types.ObjectId }),
+    typegoose_1.prop({ required: true, ref: () => Farmer_1.Farmer, type: typegoose_1.mongoose.Schema.Types.ObjectId }),
     __metadata("design:type", Object)
 ], Bid.prototype, "farmer", void 0);
 __decorate([
@@ -47,7 +49,7 @@ __decorate([
     __metadata("design:type", String)
 ], Bid.prototype, "status", void 0);
 __decorate([
-    typegoose_1.prop({ required: true, ref: 'Request', refType: typegoose_1.mongoose.Schema.Types.ObjectId }),
+    typegoose_1.prop({ required: true, ref: () => Request_1.Request, type: typegoose_1.mongoose.Schema.Types.ObjectId }),
     __metadata("design:type", Object)
 ], Bid.prototype, "request", void 0);
 Bid = __decorate([

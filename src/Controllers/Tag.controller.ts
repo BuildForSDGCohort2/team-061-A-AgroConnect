@@ -1,12 +1,12 @@
 import { TagRepository } from "../repositories/Tag.repository"
 import { Request, Response } from "express"
-import { Tag } from "../entities/Tag";
+import { Tag, TagModel } from "../entities/Tag";
 import { getModelForClass } from '@typegoose/typegoose'
 import { createResponse } from "../Utils/Response.custom"
 
 
 
-const repository = new TagRepository(getModelForClass(Tag))
+const repository = new TagRepository(TagModel)
 
 export let createTag = async (req: Request, res: Response) => {
     const Tag = req.body

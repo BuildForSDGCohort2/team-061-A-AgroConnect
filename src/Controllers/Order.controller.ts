@@ -1,10 +1,10 @@
 import {OrderRepository} from "../repositories/Order.repository"
 import {Request, Response} from "express"
-import { Order } from "../entities/Order";
+import { Order, OrderModel } from "../entities/Order";
 import {getModelForClass} from '@typegoose/typegoose'
 import {createResponse} from "../Utils/Response.custom"
 
-const repository = new OrderRepository(getModelForClass(Order))
+const repository = new OrderRepository(OrderModel)
 
 
 

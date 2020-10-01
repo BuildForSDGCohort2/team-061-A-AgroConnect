@@ -1,10 +1,10 @@
 import { RequestRepository } from "../repositories/Request.repository"
 import { Request, Response } from "express"
-import * as UserRequest from "../entities/Request";
+import {RequestModel} from "../entities/Request";
 import { getModelForClass } from '@typegoose/typegoose'
 import { createResponse } from "../Utils/Response.custom"
 
-const repository = new RequestRepository(getModelForClass(Request))
+const repository = new RequestRepository(RequestModel)
 
 
 export let createRequest = async (req: Request, res: Response) => {

@@ -29,22 +29,32 @@ class FarmerRepository extends Base_repository_1.BaseRepository {
             }
             catch (error) {
                 console.log(error);
-                return [];
+                return null;
             }
         });
     }
     //TODO: GET BY COUNTRY
     getFarmersinCountry(country) {
         return __awaiter(this, void 0, void 0, function* () {
-            const result = yield this.model.find({ "address.country": country });
-            return result;
+            try {
+                const result = yield this.model.find({ "address.country": country });
+                return result;
+            }
+            catch (error) {
+                return null;
+            }
         });
     }
     //TODO: GET BY COUNTRY AND STATE
     getFarmersinCountryandState(country, state) {
         return __awaiter(this, void 0, void 0, function* () {
-            const result = yield this.model.find({ "address.country": country, "address.state": state });
-            return result;
+            try {
+                const result = yield this.model.find({ "address.country": country, "address.state": state });
+                return result;
+            }
+            catch (error) {
+                return null;
+            }
         });
     }
     //TODO: FIND/Search BY ORG
@@ -56,21 +66,26 @@ class FarmerRepository extends Base_repository_1.BaseRepository {
             }
             catch (error) {
                 console.log(error);
-                return [];
+                return null;
             }
         });
     }
     //TODO: Rate a farmer
     rateFarmer(id, rating) {
         return __awaiter(this, void 0, void 0, function* () {
-            const result = yield this.model.findById(id);
-            if (result) {
-                result.rating.score += rating;
-                result.rating.scored += 1;
-                const newresult = yield result.save();
-                return newresult.rating;
+            try {
+                const result = yield this.model.findById(id);
+                if (result) {
+                    result.rating.score += rating;
+                    result.rating.scored += 1;
+                    const newresult = yield result.save();
+                    return newresult.rating;
+                }
+                else {
+                    return null;
+                }
             }
-            else {
+            catch (error) {
                 return null;
             }
         });
