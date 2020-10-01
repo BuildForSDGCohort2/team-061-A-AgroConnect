@@ -10,14 +10,37 @@ export class RequestRepository extends BaseRepository<Request>{
    
         // model = getModelForClass(Request);
         
+        async acceptedBid(requestid:any):Promise<Request|null>{
+            try {
+                const result = await this.model.findByIdAndUpdate(requestid,{acceptedBid:true},{new:true})
+                return result   
+            } catch (error) {
+                return null
+            }
+        }
         
-        async getRequestByProduct(Product:any):Promise<Request[]> {
-            const result = await this.model.find({products: Product}).populate("products").sort({products: 1})
-            return result
+        async getOpenRequests():Promise<Request[]|null>{
+            try {
+                const result = await this.model.find({acceptedBid:false})
+                return result    
+            } catch (error) {
+                return null
+            }
+            
+        }
+
+        async getRequestByTags(tags:any[]):Promise<Request[]|null> {
+            try {
+                const result = await this.model.find({tags:{$in:tags},acceptedBid:false})
+                return result    
+            } catch (error) {
+                return null
+            }
+            
         }
     
         async getRequestByCustomer(Customer:any):Promise<Request[]>{
-            const result = await this.model.find({customer: Customer}).populate("customer").sort({customer: 1})
+            const result = await this.model.find({customer: Customer})
             return result
         } 
     

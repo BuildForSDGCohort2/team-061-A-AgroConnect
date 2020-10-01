@@ -12,7 +12,7 @@ export let deleteOrder = async (req:Request, res:Response) => {
     const id = req.params.id
     const result = await repository.delete(id)
     if (!result) return createResponse(res,'Bad request. Operation failed',undefined,500)
-    return createResponse(res,"Order deleted",result,200)
+    return createResponse(res,"Order deleted",undefined,200)
 }
 
 export let updateOrder = async (req:Request, res:Response) => {
@@ -21,7 +21,7 @@ export let updateOrder = async (req:Request, res:Response) => {
     const result = await repository.update(id, update_order)
 
     //Object to update
-    if (!result) return createResponse(res,'Bad request. Operation failed',undefined,500)
+    if (!result) return createResponse(res,'Update Operation failed',undefined,404)
     return createResponse(res,"Order Updated",result,200)
 }
 
@@ -30,8 +30,8 @@ export let getAllOrder = async (req:Request, res:Response) => {
     const query = {}
     const result = repository.find(query)
     
-    if (!result) return createResponse(res,'Bad request. Operation failed',undefined,500)
-    return createResponse(res,"Successful",result,200)
+    if (!result) return createResponse(res,'Orders not found',undefined,404)
+    return createResponse(res,"Orders Found",result,200)
 }
 
 
@@ -39,32 +39,32 @@ export let getAllOrder = async (req:Request, res:Response) => {
 export let getOrderById = async (req:Request, res:Response) => {
     const id = req.query.id
     const result = await repository.findOne({_id: id})
-    if (!result) return createResponse(res,'Bad request. Operation failed',undefined,500)
-    return createResponse(res,"Successful",result,200)
+    if (!result) return createResponse(res,'Orders not found',undefined,404)
+    return createResponse(res,"Orders Found",result,200)
 }
 
 export let getOrders = async (req: Request, res: Response) => {
     const query = req.body
     //console.log(query)
     const result = await repository.find(query)
-    console.log(Boolean(result))
+    // console.log(Boolean(result))
     if (result) {
-        console.log("done")
-        return createResponse(res,"Successful",result,200)
+        // console.log("done")
+        return createResponse(res,"Orders found",result,200)
     } else {
-        return createResponse(res, "Bad request. Operation failed",undefined,500)
+        return createResponse(res, "Orders not found",undefined,404)
     }
 }
 
 export let getNOrders = async (req:Request,res:Response)=>{
     const query = req.body
     // console.log(query)
-    if (req.params.limit !="") {
+    if (req.params.limit !="" && !isNaN(Number(req.params.limit))) {
         const limit = Number(req.params.limit)
         const result = await repository.findN(query,limit)
-        console.log(result)
+        // console.log(result)
         if(result){
-            return createResponse(res,"Successful",result,200)
+            return createResponse(res,"Orders found",result,200)
         } else {
             return createResponse(res, "Order not found",undefined,404)
         }

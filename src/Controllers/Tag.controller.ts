@@ -22,8 +22,10 @@ export let createTag = async (req: Request, res: Response) => {
 export let deleteTag = async (req: Request, res: Response) => {
     const id = req.params.id
     const result = await repository.delete(id)
-    if (!result) return res.status(400).send('Bad request. Operation failed')
-    return res.send(`Delete ${id} Successfully`)
+    if (result) {
+        return createResponse(res,`Deleted ${id} Successfully`,undefined,200)
+    }
+    return createResponse(res,"Delete Operation Failed",undefined,500)
 }
 
 export let updateTag = async (req: Request, res: Response) => {
@@ -31,37 +33,39 @@ export let updateTag = async (req: Request, res: Response) => {
     const update_tag = req.body
     const result = await repository.update(id, update_tag)
 
-    //Object to update
-    if (!result) return res.status(400).send('Bad request. Unable to update')
-    return res.send(`Update ${id} Successful`)
+    if (result) {
+        return createResponse(res,`Updated ${id} Successfully`,undefined,200)
+    }
+    return createResponse(res,"Update Operation Failed",undefined,500)
 }
 
 export let getAllTag = async (req: Request, res: Response) => {
     const query = {}
     const result = repository.find(query)
-    if (!result) return res.status(400).send('No Tags Available')
-    return res.send(result)
-
+    if (result) {
+        return createResponse(res,"Tags found",result,200)
+    }
+    return createResponse(res,"Tags not found",undefined,404)
 }
 
 export let getTagById = async (req: Request, res: Response) => {
     const id = req.query.id
     const result = await repository.findOne({ _id: id })
-    if (!result) return res.status(400).send("Invalid Tag")
-    return res.send(result)
+    if (result) {
+        return createResponse(res,"Tag found",result,200)
+    }
+    return createResponse(res,"Tag not found",undefined,404)
 }
 
 export let getTags = async (req: Request, res: Response) => {
     const query = req.body
     //console.log(query)
     const result = await repository.find(query)
-    console.log(Boolean(result))
+    // console.log(Boolean(result))
     if (result) {
-        console.log("done")
-        return res.send(result)
-    } else {
-        return res.status(404).send({ message: "Tag not found" })
+        return createResponse(res,"Tags found",result,200)
     }
+    return createResponse(res,"Tags not found",undefined,404)
 }
 
 export let getNTags = async (req: Request, res: Response) => {
@@ -72,12 +76,11 @@ export let getNTags = async (req: Request, res: Response) => {
         const result = await repository.findN(query, limit)
         console.log(result)
         if (result) {
-            return res.send(result)
-        } else {
-            return res.status(404).send({ message: "Tag not found" })
+            return createResponse(res,"Tags found",result,200)
         }
+        return createResponse(res,"Tags not found",undefined,404)
     } else {
-        return res.status(500).send({ message: "Parameter not found" })
+        return createResponse(res,"Parameter not found",undefined,500)
     }
 
 }

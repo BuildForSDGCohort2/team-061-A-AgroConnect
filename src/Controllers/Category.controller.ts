@@ -21,62 +21,73 @@ export let createCategory = async (req: Request, res: Response) => {
 export let deleteCategory = async (req: Request, res: Response) => {
     const id = req.params.id
     const result = await repository.delete(id)
-    if (!result) return res.status(400).send('Bad request. Operation failed')
-    return res.send(`Delete ${id} Successfully`)
+    if (result) {
+        return createResponse(res, `Deleted ${id} Successfully`, undefined, 200)
+    } else {
+        return createResponse(res, "Delete Operation Failed", undefined, 500)
+    }
 }
 
 export let updateCategory = async (req: Request, res: Response) => {
     const id = String(req.params.id)
     const updateCategory = req.body
     const result = await repository.update(id, updateCategory)
-
-    //Object to update
-    if (!result) return res.status(400).send('Bad request. Unable to update')
-    return res.send(`Update ${id} Successful`)
+    if (result) {
+        return createResponse(res, `Updated ${id} Successfully`, result, 200)
+    } else {
+        return createResponse(res, "Update Opearion failed", undefined, 500)
+    }
 }
 
 export let getAllCategory = async (req: Request, res: Response) => {
     const query = {}
     const result = repository.find(query)
-    if (!result) return res.status(400).send('No Categories Available')
-    return res.send(result)
+    if (result) {
+        return createResponse(res, "Categories found", result, 200)
+    } else {
+        return createResponse(res,'No Categories Available',undefined,404)
+    }
 
 }
 
 export let getCategoryById = async (req: Request, res: Response) => {
     const id = req.query.id
     const result = await repository.findOne({ _id: id })
-    if (!result) return res.status(400).send("Invalid Category")
-    return res.send(result)
+    if (result){
+        return createResponse(res,"Category found",result,200)
+    }else{
+        return createResponse(res,"Category not found",undefined,404)
+    }
+    
 }
 
 export let getCategories = async (req: Request, res: Response) => {
     const query = req.body
     //console.log(query)
     const result = await repository.find(query)
-    console.log(Boolean(result))
+    // console.log(Boolean(result))
     if (result) {
-        console.log("done")
-        return res.send(result)
+        // console.log("done")
+        return createResponse(res,"Categories found",result,200)
     } else {
-        return res.status(404).send({ message: "Category not found" })
+        return createResponse(res,"Category not found",undefined,500)
     }
 }
 
 export let getNCategories = async (req: Request, res: Response) => {
     const query = req.body
     // console.log(query)
-    if (req.params.limit != "") {
+    if (req.params.limit != "" && !isNaN(Number(req.params.limit))) {
         const limit = Number(req.params.limit)
         const result = await repository.findN(query, limit)
-        console.log(result)
+        // console.log(result)
         if (result) {
-            return res.send(result)
+            return createResponse(res,"Categories found",result,200)
         } else {
-            return res.status(404).send({ message: "Category not found" })
+            return createResponse(res,"Category not found",undefined,500)
         }
     } else {
-        return res.status(500).send({ message: "Parameter not found" })
+        return createResponse(res,"Category not found",undefined,500)
     }
 
 }
