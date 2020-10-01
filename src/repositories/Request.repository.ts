@@ -39,9 +39,13 @@ export class RequestRepository extends BaseRepository<Request>{
             
         }
     
-        async getRequestByCustomer(Customer:any):Promise<Request[]>{
-            const result = await this.model.find({customer: Customer})
-            return result
+        async getRequestByCustomer(Customer:any):Promise<Request[]|null>{
+            try {
+                const result = await this.model.find({customer: Customer})
+                return result
+            } catch (error) {
+                return null
+            }
         } 
     
 }

@@ -49,20 +49,28 @@ export let getFarmers = async (req: Request, res: Response) => {
     const result = await repository.find(query)
     // console.log(Boolean(result))
     if (result) {
-        return createResponse(res,"Farmers found",result,200)
+        if (result.length>0) {
+            return createResponse(res, "Farmers found", result, 200)
+        } else {
+            return createResponse(res, "Farmers not found", undefined, 404)
+        }
     }
-    return createResponse(res,"Farmers not found",undefined,404)
+    return createResponse(res, "Bad request. Operation failed", undefined, 500)
 }
 export let getNFarmers = async (req: Request, res:Response)=>{
     const query = req.body
     if (req.params.limit !="" && !isNaN(Number(req.params.limit))) {
         const limit = Number(req.params.limit)
         const result = await repository.findN(query,limit)
-        console.log(result)
+        // console.log(result)
         if (result) {
-            return createResponse(res,"Farmers found",result,200)
+            if (result.length>0) {
+                return createResponse(res, "Farmers found", result, 200)
+            } else {
+                return createResponse(res, "Farmers not found", undefined, 404)
+            }
         }
-        return createResponse(res,"Farmers not found",undefined,404)
+        return createResponse(res, "Bad request. Operation failed", undefined, 500)
     }else{
         return createResponse(res,"Parameter not found",undefined,500)
     }

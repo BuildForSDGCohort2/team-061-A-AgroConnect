@@ -30,7 +30,7 @@ export let deleteBid = async (req: Request, res: Response) => {
 }
 
 export let updateBid = async (req: Request, res: Response) => {
-    const id = String(req.params.id)
+    const id = String(req.query.id)
     const update_bid = req.body
     const result = await repository.update(id, update_bid)
 
@@ -63,11 +63,13 @@ export let getBids = async (req: Request, res: Response) => {
     const result = await repository.find(query)
     // console.log(Boolean(result))
     if (result) {
-        // console.log("done")
-        return createResponse(res, "Successful", result, 200)
-    } else {
-        return createResponse(res, "Bids not found. Operation failed", undefined, 404)
+        if (result.length>0) {
+            return createResponse(res, "Bids found", result, 200)
+        } else {
+            return createResponse(res, "Bids not found", undefined, 404)
+        }
     }
+    return createResponse(res, "Bad request. Operation failed", undefined, 500)
 }
 
 export let getNBids = async (req: Request, res: Response) => {
@@ -78,12 +80,35 @@ export let getNBids = async (req: Request, res: Response) => {
         const result = await repository.findN(query, limit)
         // console.log(result)
         if (result) {
-            return createResponse(res, "Successful", result, 200)
-        } else {
-            return createResponse(res, "Bid not found", undefined, 404)
+            if (result.length>0) {
+                return createResponse(res, "Bids found", result, 200)
+            } else {
+                return createResponse(res, "Bids not found", undefined, 404)
+            }
         }
+        return createResponse(res, "Bad request. Operation failed", undefined, 500)
     } else {
         return createResponse(res, "Parameter not found. Operation failed", undefined, 500)
     }
 
+}
+
+export let getBidsByFarmer = async (req: Request, res: Response) => {
+    const farmerid = req.query.id
+    const result = await repository.getBidsByFarmer(farmerid)
+    if (result) {
+        return createResponse(res,"Bids found",result,200)
+    }else{
+        return createResponse(res,"Error executing operation",undefined,500)
+    }
+}
+
+export let getBidsbyRequest = async (req: Request, res: Response) => {
+    const requestid = req.query.id
+    const result = await repository.getBidsByRequest(requestid)
+    if (result) {
+        return createResponse(res,"Bids found",result,200)
+    }else{
+        return createResponse(res,"Error executing operation",undefined,500)
+    }
 }

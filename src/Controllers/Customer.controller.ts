@@ -53,11 +53,14 @@ export let getCustomers = async (req: Request, res: Response) => {
     //console.log(query)
     const result = await repository.find(query)
     // console.log(Boolean(result))
-    if (result){
-        return createResponse(res,"Customers found",result,200)
-    }else{
-        return createResponse(res,"Customers not found",undefined,404)
+    if (result) {
+        if (result.length>0) {
+            return createResponse(res, "Customers found", result, 200)
+        } else {
+            return createResponse(res, "Customers not found", undefined, 404)
+        }
     }
+    return createResponse(res, "Bad request. Operation failed", undefined, 500)
 }
 
 export let getNCustomers = async (req: Request, res: Response) => {
@@ -67,11 +70,14 @@ export let getNCustomers = async (req: Request, res: Response) => {
         const limit = Number(req.params.limit)
         const result = await repository.findN(query, limit)
         // console.log(result)
-        if (result){
-            return createResponse(res,"Customers found",result,200)
-        }else{
-            return createResponse(res,"Customers not found",undefined,404)
+        if (result) {
+            if (result.length>0) {
+                return createResponse(res, "Customers found", result, 200)
+            } else {
+                return createResponse(res, "Customers not found", undefined, 404)
+            }
         }
+        return createResponse(res, "Bad request. Operation failed", undefined, 500)
     } else {
         return createResponse(res,"Parameter not found",undefined,500 )
     }

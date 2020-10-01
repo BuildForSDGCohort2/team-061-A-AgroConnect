@@ -24,8 +24,18 @@ Request_Router.post("/update", requestcontroller.updateRequest)
 //get host/request/:id
 Request_Router.get("/find", requestcontroller.getRequestById)
 
-//post host/request/:limit
-Request_Router.post("/:limit", requestcontroller.getNRequests)
+Request_Router.get("/find/customer",requestcontroller.getRequestByCustomer)
+//post host/request/find
+Request_Router.post("/find", requestcontroller.getRequests)
 
-//post host/request/
-Request_Router.post("/", requestcontroller.getRequests)
+//post host/request/find/:limit
+Request_Router.post("/find/:limit", requestcontroller.getNRequests)
+
+//post host/request/tags
+Request_Router.post("/tags",requestcontroller.getRequestByTags)
+
+//get host/request/open
+Request_Router.get("/open",requestcontroller.getOpenRequests)
+
+//get host/request/find/customer
+Request_Router.get("/find/customer",requestcontroller.getRequestByCustomer)

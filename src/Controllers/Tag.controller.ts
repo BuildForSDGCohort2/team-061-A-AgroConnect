@@ -63,9 +63,13 @@ export let getTags = async (req: Request, res: Response) => {
     const result = await repository.find(query)
     // console.log(Boolean(result))
     if (result) {
-        return createResponse(res,"Tags found",result,200)
+        if (result.length>0) {
+            return createResponse(res, "Tags found", result, 200)
+        } else {
+            return createResponse(res, "Tags not found", undefined, 404)
+        }
     }
-    return createResponse(res,"Tags not found",undefined,404)
+    return createResponse(res, "Bad request. Operation failed", undefined, 500)
 }
 
 export let getNTags = async (req: Request, res: Response) => {
@@ -74,11 +78,15 @@ export let getNTags = async (req: Request, res: Response) => {
     if (req.params.limit != "") {
         const limit = Number(req.params.limit)
         const result = await repository.findN(query, limit)
-        console.log(result)
+        // console.log(result)
         if (result) {
-            return createResponse(res,"Tags found",result,200)
+            if (result.length>0) {
+                return createResponse(res, "Tags found", result, 200)
+            } else {
+                return createResponse(res, "Tags not found", undefined, 404)
+            }
         }
-        return createResponse(res,"Tags not found",undefined,404)
+        return createResponse(res, "Bad request. Operation failed", undefined, 500)
     } else {
         return createResponse(res,"Parameter not found",undefined,500)
     }

@@ -49,11 +49,13 @@ export let getOrders = async (req: Request, res: Response) => {
     const result = await repository.find(query)
     // console.log(Boolean(result))
     if (result) {
-        // console.log("done")
-        return createResponse(res,"Orders found",result,200)
-    } else {
-        return createResponse(res, "Orders not found",undefined,404)
+        if (result.length>0) {
+            return createResponse(res, "Orders found", result, 200)
+        } else {
+            return createResponse(res, "Orders not found", undefined, 404)
+        }
     }
+    return createResponse(res, "Bad request. Operation failed", undefined, 500)
 }
 
 export let getNOrders = async (req:Request,res:Response)=>{
@@ -63,13 +65,59 @@ export let getNOrders = async (req:Request,res:Response)=>{
         const limit = Number(req.params.limit)
         const result = await repository.findN(query,limit)
         // console.log(result)
-        if(result){
-            return createResponse(res,"Orders found",result,200)
-        } else {
-            return createResponse(res, "Order not found",undefined,404)
+        if (result) {
+            if (result.length>0) {
+                return createResponse(res, "Orders found", result, 200)
+            } else {
+                return createResponse(res, "Orders not found", undefined, 404)
+            }
         }
+        return createResponse(res, "Bad request. Operation failed", undefined, 500)
 } else {
     return createResponse(res, "Bad request. Operation failed",undefined,500)
 }
+}
 
+export let getOrdersbyFarmer = async (req:Request,res:Response)=>{
+    const farmerid = req.query.id
+    const result = await repository.getOrderByFarmer(farmerid)
+    if(result){
+        return createResponse(res,"Orders found",result,200)
+    } else {
+        return createResponse(res, "Order not found",undefined,404)
+    }
+}
+
+export let getOrdersbyCustomer = async (req:Request,res:Response)=>{
+    const customerid = req.query.id
+    const result = await repository.getOrderByCustomer(customerid)
+    if(result){
+        return createResponse(res,"Orders found",result,200)
+    } else {
+        return createResponse(res, "Order not found",undefined,404)
+    }
+}
+
+
+export let CreateSingleOrder = async (req:Request,res:Response)=>{
+    const request = req.body.request
+    const bid = req.body.bid
+    const customerid = req.query.customer
+    const result:any = await repository.createSingleOrder(request,bid,customerid)
+    if (result) {
+        return createResponse(res,"Order Successfully placed",result._id,200)
+    } else {
+        return createResponse(res,"Error occured during operation",undefined,500)
+    }
+}
+
+export let CreateBulkOrder = async (req:Request,res:Response)=>{
+    const order = req.body
+    const customerid = req.query.customer
+    const result:any = await repository.createBulkOrder(order,customerid)
+    if (result) {
+        return createResponse(res,"Order Successfully placed",result._id,200)
+    } else {
+        return createResponse(res,"Error occured during operation",undefined,500)
+    }
 }

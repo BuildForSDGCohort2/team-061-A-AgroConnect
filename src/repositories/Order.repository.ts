@@ -6,7 +6,7 @@ import { Request, RequestModel } from "../entities/Request";
 import { getModelForClass } from "@typegoose/typegoose";
 
 export class OrderRepository extends BaseRepository<Order>{
-    model = getModelForClass(Order)
+    // model = getModelForClass(Order)
     //TODO GET ORDER BY FARMER
     async getOrderByFarmer(farmerid: any): Promise<Order[] | null> {
         try {

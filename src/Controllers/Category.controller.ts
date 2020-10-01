@@ -67,11 +67,13 @@ export let getCategories = async (req: Request, res: Response) => {
     const result = await repository.find(query)
     // console.log(Boolean(result))
     if (result) {
-        // console.log("done")
-        return createResponse(res,"Categories found",result,200)
-    } else {
-        return createResponse(res,"Category not found",undefined,500)
+        if (result.length>0) {
+            return createResponse(res, "Categories found", result, 200)
+        } else {
+            return createResponse(res, "Categories not found", undefined, 404)
+        }
     }
+    return createResponse(res, "Bad request. Operation failed", undefined, 500)
 }
 
 export let getNCategories = async (req: Request, res: Response) => {
@@ -82,10 +84,13 @@ export let getNCategories = async (req: Request, res: Response) => {
         const result = await repository.findN(query, limit)
         // console.log(result)
         if (result) {
-            return createResponse(res,"Categories found",result,200)
-        } else {
-            return createResponse(res,"Category not found",undefined,500)
+            if (result.length>0) {
+                return createResponse(res, "Categories found", result, 200)
+            } else {
+                return createResponse(res, "Categories not found", undefined, 404)
+            }
         }
+        return createResponse(res, "Bad request. Operation failed", undefined, 500)
     } else {
         return createResponse(res,"Category not found",undefined,500)
     }

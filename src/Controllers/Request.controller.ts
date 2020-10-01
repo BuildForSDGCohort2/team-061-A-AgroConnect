@@ -58,8 +58,14 @@ export let getRequests = async (req: Request, res: Response) => {
     //console.log(query)
     const result = await repository.find(query)
     // console.log(Boolean(result))
-    if (!result) return createResponse(res, 'Requests not found', undefined, 404)
-    return createResponse(res, "Requests found", result, 200)
+    if (result) {
+        if (result.length>0) {
+            return createResponse(res, "Requests found", result, 200)
+        } else {
+            return createResponse(res, "Request not found", undefined, 404)
+        }
+    }
+    return createResponse(res, "Bad request. Operation failed", undefined, 500)
 }
 
 export let getNRequests = async (req: Request, res: Response) => {
@@ -70,12 +76,46 @@ export let getNRequests = async (req: Request, res: Response) => {
         const result = await repository.findN(query, limit)
         // console.log(result)
         if (result) {
+            if (result.length>0) {
+                return createResponse(res, "Requests found", result, 200)
+            } else {
+                return createResponse(res, "Request not found", undefined, 404)
+            }
+        }
+        return createResponse(res, "Bad request. Operation failed", undefined, 500)
+    } else {
+        return createResponse(res, "Parameter not found", undefined, 500)
+    }
+
+}
+
+export let getOpenRequests = async (req: Request, res: Response) =>{
+    const result = await repository.getOpenRequests()
+    if (result) {
+        return createResponse(res,"Requests found",result,200)
+    } else {
+        return createResponse(res,"Operation failed",undefined,500)
+    }
+}
+export let getRequestByCustomer = async (req: Request, res: Response) =>{
+    const customerid = req.query.id
+    const result = await repository.getRequestByCustomer(customerid)
+    if (result) {
+        return createResponse(res,"Requests found",result,200)
+    } else {
+        return createResponse(res,"Operation failed",undefined,500)
+    }
+}
+
+export let getRequestByTags = async (req: Request, res: Response) =>{
+    const tags:any[] = req.body.tag
+    const result = await repository.getRequestByTags(tags)
+    if (result) {
+        if (result.length>0) {
             return createResponse(res, "Requests found", result, 200)
         } else {
             return createResponse(res, "Request not found", undefined, 404)
         }
-    } else {
-        return createResponse(res, "Bad request. Operation failed", undefined, 500)
     }
-
+    return createResponse(res, "Bad request. Operation failed", undefined, 500)
 }
