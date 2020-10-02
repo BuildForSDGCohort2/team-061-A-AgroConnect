@@ -1,0 +1,22 @@
+Entites
+Farmer
+Customer
+Request {contains Bid}
+Product
+Order
+
+Endpoints [28]
+CRUD {Farmer, Customer, Request [update is for bid only], Product, Order}
+Read
+Farmer aggregation {by niche, by address}
+Request aggregation {by product, by location, by type}
+Product {by stock, by croptype [annual, prepenial etc], bytype [animal/crop] }
+
+Special
+Account sign up, login
+
+
+In progress
+CRUD Farmer
+CRUD Customer
+Account
