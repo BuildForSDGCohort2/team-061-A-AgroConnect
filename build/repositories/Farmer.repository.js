@@ -23,7 +23,7 @@ class FarmerRepository extends Base_repository_1.BaseRepository {
                 return result;
             }
             catch (error) {
-                console.log(error);
+                // console.log(error)
                 return null;
             }
         });
@@ -63,7 +63,7 @@ class FarmerRepository extends Base_repository_1.BaseRepository {
                 return result;
             }
             catch (error) {
-                console.log(error);
+                //    console.log(error)
                 return null;
             }
         });

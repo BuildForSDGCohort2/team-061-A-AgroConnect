@@ -13,7 +13,7 @@ export class FarmerRepository extends BaseRepository<Farmer>{
             // const result = await this.model.find()
             return result
         } catch (error) {
-            console.log(error)
+            // console.log(error)
             return null
         }
     }
@@ -46,7 +46,7 @@ export class FarmerRepository extends BaseRepository<Farmer>{
         // await this.model.aggregate([{$match:{$expr:{$gt:[{$indexOfCP:["$organization",organization]},-1]}}},{$project:{password:0}}])
         return result
        } catch (error) {
-           console.log(error)
+        //    console.log(error)
            return null
        }
         
