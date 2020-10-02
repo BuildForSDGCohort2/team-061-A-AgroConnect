@@ -6,11 +6,16 @@ import { Request, RequestModel } from "../entities/Request";
 import { getModelForClass } from "@typegoose/typegoose";
 
 export class OrderRepository extends BaseRepository<Order>{
-    // model = getModelForClass(Order)
+    model = getModelForClass(Order)
     //TODO GET ORDER BY FARMER
     async getOrderByFarmer(farmerid: any): Promise<Order[] | null> {
         try {
-            const result = await this.model.find({ "bid.farmer": farmerid })
+            const result = await this.model.find({}).populate({
+                path:"bid",
+                match: {farmer:farmerid}
+            })
+            // .where('complete',false).where("bid.farmer",farmerid)
+            // find({ "bid.farmer": farmerid ,complete:false})
             return result
         } catch (error) {
             return null
@@ -20,7 +25,11 @@ export class OrderRepository extends BaseRepository<Order>{
     //TODO GET ORDER BY CUSTOMER
     async getOrderByCustomer(customerid: any): Promise<Order[] | null> {
         try {
-            const result = await this.model.find({ "request.customer": customerid })
+            const result = await this.model.find({}).populate({
+                path:"request",
+                match: {customer:customerid}
+            })
+            // find({ "request.customer": customerid ,complete:false})
             return result
         } catch (error) {
             return null

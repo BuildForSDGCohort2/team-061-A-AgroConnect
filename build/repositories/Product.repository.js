@@ -12,8 +12,12 @@ Object.defineProperty(exports, "__esModule", { value: true });
 exports.ProductRepository = void 0;
 const Base_repository_1 = require("./base/Base.repository");
 const Product_1 = require("../entities/Product");
+const typegoose_1 = require("@typegoose/typegoose");
 class ProductRepository extends Base_repository_1.BaseRepository {
-    // model = getModelForClass(Product)
+    constructor() {
+        super(...arguments);
+        this.model = typegoose_1.getModelForClass(Product_1.Product);
+    }
     getProductsByFarmer(id) {
         return __awaiter(this, void 0, void 0, function* () {
             try {
@@ -28,7 +32,10 @@ class ProductRepository extends Base_repository_1.BaseRepository {
     getProductsByCategory(Category) {
         return __awaiter(this, void 0, void 0, function* () {
             try {
-                const result = yield this.model.find().populate("category", "name").in("category.name", Category);
+                const result = yield this.model.find({}).populate({
+                    path: "category",
+                    match: { "name": { $in: Category } }
+                });
                 return result;
             }
             catch (error) {

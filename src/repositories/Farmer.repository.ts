@@ -40,9 +40,9 @@ export class FarmerRepository extends BaseRepository<Farmer>{
     //TODO: FIND/Search BY ORG
     async searchByOrganization(organization:string):Promise<Farmer[]|null>{
        try {
-           let regexp = `/${organization}/`
+           let regexp = `.*${organization}.*`
            let exp = new RegExp(regexp,'i')
-        const result = await this.model.find({organization:exp.source})
+        const result = await this.model.find({organization:exp})
         // await this.model.aggregate([{$match:{$expr:{$gt:[{$indexOfCP:["$organization",organization]},-1]}}},{$project:{password:0}}])
         return result
        } catch (error) {

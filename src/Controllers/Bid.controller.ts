@@ -42,7 +42,7 @@ export let updateBid = async (req: Request, res: Response) => {
 
 export let getAllBid = async (req: Request, res: Response) => {
     const query = {}
-    const result = repository.find(query)
+    const result = await repository.find(query)
 
     if (!result) return createResponse(res, 'Bids not found. Operation failed', undefined, 404)
     return createResponse(res, "Successful", result, 200)

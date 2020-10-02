@@ -25,8 +25,8 @@ Category_Router.post("/update", categorycontroller.updateCategory)
 //get host/category/:id
 Category_Router.get("/find", categorycontroller.getCategoryById)
 
-//post host/category/:limit
-Category_Router.post("/:limit", categorycontroller.getNCategories)
+//post host/category/find
+Category_Router.post("/find", categorycontroller.getCategories)
 
-//post host/category/
-Category_Router.post("/", categorycontroller.getCategories)
+//post host/category/find/:limit
+Category_Router.post("/find/:limit", categorycontroller.getNCategories)

@@ -25,7 +25,12 @@ class OrderRepository extends Base_repository_1.BaseRepository {
     getOrderByFarmer(farmerid) {
         return __awaiter(this, void 0, void 0, function* () {
             try {
-                const result = yield this.model.find({ "bid.farmer": farmerid });
+                const result = yield this.model.find({}).populate({
+                    path: "bid",
+                    match: { farmer: farmerid }
+                });
+                // .where('complete',false).where("bid.farmer",farmerid)
+                // find({ "bid.farmer": farmerid ,complete:false})
                 return result;
             }
             catch (error) {
@@ -37,7 +42,11 @@ class OrderRepository extends Base_repository_1.BaseRepository {
     getOrderByCustomer(customerid) {
         return __awaiter(this, void 0, void 0, function* () {
             try {
-                const result = yield this.model.find({ "request.customer": customerid });
+                const result = yield this.model.find({}).populate({
+                    path: "request",
+                    match: { customer: customerid }
+                });
+                // find({ "request.customer": customerid ,complete:false})
                 return result;
             }
             catch (error) {

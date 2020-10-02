@@ -40,8 +40,8 @@ exports.Category_Router.delete("/:id", categorycontroller.deleteCategory);
 exports.Category_Router.post("/update", categorycontroller.updateCategory);
 //get host/category/:id
 exports.Category_Router.get("/find", categorycontroller.getCategoryById);
-//post host/category/:limit
-exports.Category_Router.post("/:limit", categorycontroller.getNCategories);
-//post host/category/
-exports.Category_Router.post("/", categorycontroller.getCategories);
+//post host/category/find
+exports.Category_Router.post("/find", categorycontroller.getCategories);
+//post host/category/find/:limit
+exports.Category_Router.post("/find/:limit", categorycontroller.getNCategories);
 //# sourceMappingURL=category.routes.js.map

@@ -19,14 +19,24 @@ class BidRepository extends Base_repository_1.BaseRepository {
     //* async functionName(param1:type1,...,paramN:typeN):Promise<returnType>{}
     getBidsByFarmer(Farmer) {
         return __awaiter(this, void 0, void 0, function* () {
-            const result = yield this.model.find({ farmer: Farmer }).populate("request").sort({ status: 1 });
-            return result;
+            try {
+                const result = yield this.model.find({ farmer: Farmer }).populate("request").sort({ status: 1 });
+                return result;
+            }
+            catch (error) {
+                return null;
+            }
         });
     }
     getBidsByRequest(Request) {
         return __awaiter(this, void 0, void 0, function* () {
-            const result = yield this.model.find({ request: Request }).populate("request").sort({ status: 1 });
-            return result;
+            try {
+                const result = yield this.model.find({ request: Request }).populate("request").sort({ status: 1 });
+                return result;
+            }
+            catch (error) {
+                return null;
+            }
         });
     }
 }

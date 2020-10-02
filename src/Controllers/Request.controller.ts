@@ -26,7 +26,7 @@ export let deleteRequest = async (req: Request, res: Response) => {
 }
 
 export let updateRequest = async (req: Request, res: Response) => {
-    const id = String(req.params.id)
+    const id = String(req.query.id)
     const update_request = req.body
     const result = await repository.update(id, update_request)
 
@@ -38,7 +38,7 @@ export let updateRequest = async (req: Request, res: Response) => {
 
 export let getAllRequest = async (req: Request, res: Response) => {
     const query = {}
-    const result = repository.find(query)
+    const result = await repository.find(query)
 
     if (!result) return createResponse(res, 'Requests not found', undefined, 404)
     return createResponse(res, "Requests found", result, 200)

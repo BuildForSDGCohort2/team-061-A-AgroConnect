@@ -25,11 +25,11 @@ Order_Router.post("/update", ordercontroller.updateOrder)
 //get host/order/find
 Order_Router.get("/find", ordercontroller.getOrderById)
 
-//post host/order/find/:limit
-Order_Router.post("/find/:limit", ordercontroller.getNOrders)
-
 //post host/order/find
 Order_Router.post("/find", ordercontroller.getOrders)
+
+//post host/order/find/:limit
+Order_Router.post("/find/:limit", ordercontroller.getNOrders)
 
 //get host/order/find/customer
 Order_Router.get("/find/customer",ordercontroller.getOrdersbyCustomer)

@@ -30,16 +30,24 @@ exports.Order_Router = express_1.default.Router();
 exports.Order_Router.all("/info", (req, res) => {
     return Response_custom_1.createResponse(res, "CRUD API For handling Product Order operations", {}, 200);
 });
+//post host/order/single
+exports.Order_Router.post("/single", ordercontroller.CreateSingleOrder);
+//post host/order/bulk
+exports.Order_Router.post("/bulk", ordercontroller.CreateBulkOrder);
 //get host/order/
 exports.Order_Router.get("/", ordercontroller.getAllOrder);
 //delete host/order/id
 exports.Order_Router.delete("/:id", ordercontroller.deleteOrder);
 //post host/order/update
 exports.Order_Router.post("/update", ordercontroller.updateOrder);
-//get host/order/:id
+//get host/order/find
 exports.Order_Router.get("/find", ordercontroller.getOrderById);
-//post host/order/:limit
-exports.Order_Router.post("/:limit", ordercontroller.getNOrders);
-//post host/order/
-exports.Order_Router.post("/", ordercontroller.getOrders);
+//post host/order/find
+exports.Order_Router.post("/find", ordercontroller.getOrders);
+//post host/order/find/:limit
+exports.Order_Router.post("/find/:limit", ordercontroller.getNOrders);
+//get host/order/find/customer
+exports.Order_Router.get("/find/customer", ordercontroller.getOrdersbyCustomer);
+//get host/order/find/farmer
+exports.Order_Router.get("/find/farmer", ordercontroller.getOrdersbyFarmer);
 //# sourceMappingURL=order.routes.js.map

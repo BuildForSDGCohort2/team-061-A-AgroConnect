@@ -40,8 +40,12 @@ exports.Bid_Router.delete("/:id", bidcontroller.deleteBid);
 exports.Bid_Router.post("/update", bidcontroller.updateBid);
 //get host/bid/:id
 exports.Bid_Router.get("/find", bidcontroller.getBidById);
-//post host/bid/:limit
-exports.Bid_Router.post("/:limit", bidcontroller.getNBids);
-//post host/bid/
-exports.Bid_Router.post("/", bidcontroller.getBids);
+//post host/bid/find
+exports.Bid_Router.post("/find", bidcontroller.getBids);
+//post host/bid/find/:limit
+exports.Bid_Router.post("/find/:limit", bidcontroller.getNBids);
+//post host/bid/find/farmer
+exports.Bid_Router.get("/find/farmer", bidcontroller.getBidsByFarmer);
+//post host/bid/find/request
+exports.Bid_Router.get("/find/request", bidcontroller.getBidsbyRequest);
 //# sourceMappingURL=bid.routes.js.map

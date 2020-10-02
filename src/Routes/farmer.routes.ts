@@ -22,8 +22,8 @@ Farmer_router.post("/update",farmercontroller.updateFarmer)
 Farmer_router.get("/find",farmercontroller.getFarmerbyId)
 
 
-//post host/farmer
-Farmer_router.post("",farmercontroller.getFarmers)
+//post host/farmer/find
+Farmer_router.post("/find",farmercontroller.getFarmers)
 
 //get host/farmer/location
 Farmer_router.get("/location",farmercontroller.getFarmerByCountryAndState)
@@ -34,5 +34,5 @@ Farmer_router.get("/organization",farmercontroller.searchOrganization)
 //post host/farmer/rate
 Farmer_router.put("/rate",farmercontroller.rateFarmer)
 
-//post host/farmer/:limit
-Farmer_router.post("/:limit",farmercontroller.getNFarmers)
+//post host/farmer/find/:limit
+Farmer_router.post("/find/:limit",farmercontroller.getNFarmers)

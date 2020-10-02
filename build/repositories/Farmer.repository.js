@@ -11,13 +11,8 @@ var __awaiter = (this && this.__awaiter) || function (thisArg, _arguments, P, ge
 Object.defineProperty(exports, "__esModule", { value: true });
 exports.FarmerRepository = void 0;
 const Base_repository_1 = require("./base/Base.repository");
-const Farmer_1 = require("../entities/Farmer");
-const typegoose_1 = require("@typegoose/typegoose");
 class FarmerRepository extends Base_repository_1.BaseRepository {
-    constructor() {
-        super(...arguments);
-        this.model = typegoose_1.getModelForClass(Farmer_1.Farmer);
-    }
+    // model = getModelForClass(Farmer)
     //TODO: GET BY NICHE
     getFarmersbyNiche(Niche) {
         return __awaiter(this, void 0, void 0, function* () {
@@ -61,7 +56,10 @@ class FarmerRepository extends Base_repository_1.BaseRepository {
     searchByOrganization(organization) {
         return __awaiter(this, void 0, void 0, function* () {
             try {
-                const result = yield this.model.aggregate([{ $match: { $expr: { $gt: [{ $indexOfCP: ["$organization", organization] }, -1] } } }, { $project: { password: 0 } }]);
+                let regexp = `.*${organization}.*`;
+                let exp = new RegExp(regexp, 'i');
+                const result = yield this.model.find({ organization: exp });
+                // await this.model.aggregate([{$match:{$expr:{$gt:[{$indexOfCP:["$organization",organization]},-1]}}},{$project:{password:0}}])
                 return result;
             }
             catch (error) {

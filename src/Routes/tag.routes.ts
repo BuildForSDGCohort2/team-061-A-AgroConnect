@@ -23,8 +23,10 @@ Tag_Router.post("/update", tagcontroller.updateTag)
 //get host/tag/:id
 Tag_Router.get("/find", tagcontroller.getTagById)
 
-//post host/tag/:limit
-Tag_Router.post("/:limit", tagcontroller.getNTags)
+//post host/tag/find
+Tag_Router.post("/find", tagcontroller.getTags)
 
-//post host/tag/
-Tag_Router.post("/", tagcontroller.getTags)
+//post host/tag/find/:limit
+Tag_Router.post("/find/:limit", tagcontroller.getNTags)
+
+

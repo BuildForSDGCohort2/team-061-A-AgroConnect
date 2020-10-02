@@ -24,7 +24,7 @@ app.get("/", (req: Request, res: Response) => {
 
 const uri: string = 'mongodb://127.0.0.1:27017' //local
 const uric: string = "mongodb+srv://" + MongoDBAtlasusername + ":" + MongoDBAtlaspassword + "-db.amow0.azure.mongodb.net/" + MongoDBAtlasdatabase + "?retryWrites=true&w=majority"
-mongoose.connect(uri, { useNewUrlParser: true, useCreateIndex: true, useFindAndModify: false, useUnifiedTopology: true, dbName: "AgroConnect" },
+mongoose.connect(uric, { useNewUrlParser: true, useCreateIndex: true, useFindAndModify: false, useUnifiedTopology: true, dbName: "AgroConnect" },
     (err) => {
         if (err) {
             console.log(err.message)

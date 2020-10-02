@@ -25,7 +25,7 @@ exports.deleteCustomer = (req, res) => __awaiter(void 0, void 0, void 0, functio
     }
 });
 exports.updateCustomer = (req, res) => __awaiter(void 0, void 0, void 0, function* () {
-    const id = String(req.params.id);
+    const id = String(req.query.id);
     const update = req.body;
     const result = yield repository.update(id, update);
     //Object properties to update
@@ -62,11 +62,14 @@ exports.getCustomers = (req, res) => __awaiter(void 0, void 0, void 0, function*
     const result = yield repository.find(query);
     // console.log(Boolean(result))
     if (result) {
-        return Response_custom_1.createResponse(res, "Customers found", result, 200);
+        if (result.length > 0) {
+            return Response_custom_1.createResponse(res, "Customers found", result, 200);
+        }
+        else {
+            return Response_custom_1.createResponse(res, "Customers not found", undefined, 404);
+        }
     }
-    else {
-        return Response_custom_1.createResponse(res, "Customers not found", undefined, 404);
-    }
+    return Response_custom_1.createResponse(res, "Bad request. Operation failed", undefined, 500);
 });
 exports.getNCustomers = (req, res) => __awaiter(void 0, void 0, void 0, function* () {
     const query = req.body;
@@ -76,11 +79,14 @@ exports.getNCustomers = (req, res) => __awaiter(void 0, void 0, void 0, function
         const result = yield repository.findN(query, limit);
         // console.log(result)
         if (result) {
-            return Response_custom_1.createResponse(res, "Customers found", result, 200);
+            if (result.length > 0) {
+                return Response_custom_1.createResponse(res, "Customers found", result, 200);
+            }
+            else {
+                return Response_custom_1.createResponse(res, "Customers not found", undefined, 404);
+            }
         }
-        else {
-            return Response_custom_1.createResponse(res, "Customers not found", undefined, 404);
-        }
+        return Response_custom_1.createResponse(res, "Bad request. Operation failed", undefined, 500);
     }
     else {
         return Response_custom_1.createResponse(res, "Parameter not found", undefined, 500);

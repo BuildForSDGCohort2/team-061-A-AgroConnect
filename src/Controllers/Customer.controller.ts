@@ -17,7 +17,7 @@ export let deleteCustomer = async (req: Request, res: Response) => {
 }
 
 export let updateCustomer = async (req: Request, res: Response) => {
-    const id = String(req.params.id)
+    const id = String(req.query.id)
     const update = req.body
     const result = await repository.update(id, update)
     //Object properties to update

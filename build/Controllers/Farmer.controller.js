@@ -57,20 +57,30 @@ exports.getFarmers = (req, res) => __awaiter(void 0, void 0, void 0, function* (
     const result = yield repository.find(query);
     // console.log(Boolean(result))
     if (result) {
-        return Response_custom_1.createResponse(res, "Farmers found", result, 200);
+        if (result.length > 0) {
+            return Response_custom_1.createResponse(res, "Farmers found", result, 200);
+        }
+        else {
+            return Response_custom_1.createResponse(res, "Farmers not found", undefined, 404);
+        }
     }
-    return Response_custom_1.createResponse(res, "Farmers not found", undefined, 404);
+    return Response_custom_1.createResponse(res, "Bad request. Operation failed", undefined, 500);
 });
 exports.getNFarmers = (req, res) => __awaiter(void 0, void 0, void 0, function* () {
     const query = req.body;
     if (req.params.limit != "" && !isNaN(Number(req.params.limit))) {
         const limit = Number(req.params.limit);
         const result = yield repository.findN(query, limit);
-        console.log(result);
+        // console.log(result)
         if (result) {
-            return Response_custom_1.createResponse(res, "Farmers found", result, 200);
+            if (result.length > 0) {
+                return Response_custom_1.createResponse(res, "Farmers found", result, 200);
+            }
+            else {
+                return Response_custom_1.createResponse(res, "Farmers not found", undefined, 404);
+            }
         }
-        return Response_custom_1.createResponse(res, "Farmers not found", undefined, 404);
+        return Response_custom_1.createResponse(res, "Bad request. Operation failed", undefined, 500);
     }
     else {
         return Response_custom_1.createResponse(res, "Parameter not found", undefined, 500);

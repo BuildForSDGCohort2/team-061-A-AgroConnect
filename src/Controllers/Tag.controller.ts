@@ -11,7 +11,7 @@ const repository = new TagRepository(TagModel)
 export let createTag = async (req: Request, res: Response) => {
     const Tag = req.body
     const result = await repository.create(Tag)
-    if (result) {
+    if (!isNaN(Number(result))) {
         const newTag = await repository.findOne({ _id: result })
         return createResponse(res, "Tag created", newTag, 200)
     } else {
@@ -29,7 +29,7 @@ export let deleteTag = async (req: Request, res: Response) => {
 }
 
 export let updateTag = async (req: Request, res: Response) => {
-    const id = String(req.params.id)
+    const id = String(req.query.id)
     const update_tag = req.body
     const result = await repository.update(id, update_tag)
 
@@ -41,7 +41,7 @@ export let updateTag = async (req: Request, res: Response) => {
 
 export let getAllTag = async (req: Request, res: Response) => {
     const query = {}
-    const result = repository.find(query)
+    const result = await repository.find(query)
     if (result) {
         return createResponse(res,"Tags found",result,200)
     }

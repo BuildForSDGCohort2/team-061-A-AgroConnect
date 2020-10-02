@@ -36,7 +36,7 @@ exports.deleteCategory = (req, res) => __awaiter(void 0, void 0, void 0, functio
     }
 });
 exports.updateCategory = (req, res) => __awaiter(void 0, void 0, void 0, function* () {
-    const id = String(req.params.id);
+    const id = String(req.query.id);
     const updateCategory = req.body;
     const result = yield repository.update(id, updateCategory);
     if (result) {
@@ -48,7 +48,7 @@ exports.updateCategory = (req, res) => __awaiter(void 0, void 0, void 0, functio
 });
 exports.getAllCategory = (req, res) => __awaiter(void 0, void 0, void 0, function* () {
     const query = {};
-    const result = repository.find(query);
+    const result = yield repository.find(query);
     if (result) {
         return Response_custom_1.createResponse(res, "Categories found", result, 200);
     }
@@ -72,12 +72,14 @@ exports.getCategories = (req, res) => __awaiter(void 0, void 0, void 0, function
     const result = yield repository.find(query);
     // console.log(Boolean(result))
     if (result) {
-        // console.log("done")
-        return Response_custom_1.createResponse(res, "Categories found", result, 200);
+        if (result.length > 0) {
+            return Response_custom_1.createResponse(res, "Categories found", result, 200);
+        }
+        else {
+            return Response_custom_1.createResponse(res, "Categories not found", undefined, 404);
+        }
     }
-    else {
-        return Response_custom_1.createResponse(res, "Category not found", undefined, 500);
-    }
+    return Response_custom_1.createResponse(res, "Bad request. Operation failed", undefined, 500);
 });
 exports.getNCategories = (req, res) => __awaiter(void 0, void 0, void 0, function* () {
     const query = req.body;
@@ -87,11 +89,14 @@ exports.getNCategories = (req, res) => __awaiter(void 0, void 0, void 0, functio
         const result = yield repository.findN(query, limit);
         // console.log(result)
         if (result) {
-            return Response_custom_1.createResponse(res, "Categories found", result, 200);
+            if (result.length > 0) {
+                return Response_custom_1.createResponse(res, "Categories found", result, 200);
+            }
+            else {
+                return Response_custom_1.createResponse(res, "Categories not found", undefined, 404);
+            }
         }
-        else {
-            return Response_custom_1.createResponse(res, "Category not found", undefined, 500);
-        }
+        return Response_custom_1.createResponse(res, "Bad request. Operation failed", undefined, 500);
     }
     else {
         return Response_custom_1.createResponse(res, "Category not found", undefined, 500);

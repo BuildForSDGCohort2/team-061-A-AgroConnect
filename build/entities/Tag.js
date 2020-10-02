@@ -20,7 +20,7 @@ const typegoose_1 = require("@typegoose/typegoose");
 let Tag = class Tag {
 };
 __decorate([
-    typegoose_1.prop({ required: true, min: 1 }),
+    typegoose_1.prop(),
     __metadata("design:type", Number)
 ], Tag.prototype, "_id", void 0);
 __decorate([

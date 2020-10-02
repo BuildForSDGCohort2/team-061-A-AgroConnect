@@ -40,8 +40,8 @@ exports.Tag_Router.delete("/:id", tagcontroller.deleteTag);
 exports.Tag_Router.post("/update", tagcontroller.updateTag);
 //get host/tag/:id
 exports.Tag_Router.get("/find", tagcontroller.getTagById);
-//post host/tag/:limit
-exports.Tag_Router.post("/:limit", tagcontroller.getNTags);
-//post host/tag/
-exports.Tag_Router.post("/", tagcontroller.getTags);
+//post host/tag/find
+exports.Tag_Router.post("/find", tagcontroller.getTags);
+//post host/tag/find/:limit
+exports.Tag_Router.post("/find/:limit", tagcontroller.getNTags);
 //# sourceMappingURL=tag.routes.js.map

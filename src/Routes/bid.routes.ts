@@ -22,11 +22,13 @@ Bid_Router.post("/update", bidcontroller.updateBid)
 //get host/bid/:id
 Bid_Router.get("/find", bidcontroller.getBidById)
 
+//post host/bid/find
+Bid_Router.post("/find", bidcontroller.getBids)
+
 //post host/bid/find/:limit
 Bid_Router.post("/find/:limit", bidcontroller.getNBids)
 
-//post host/bid/find
-Bid_Router.post("/find", bidcontroller.getBids)
+
 
 //post host/bid/find/farmer
 Bid_Router.get("/find/farmer",bidcontroller.getBidsByFarmer)

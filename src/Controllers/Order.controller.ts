@@ -16,7 +16,7 @@ export let deleteOrder = async (req:Request, res:Response) => {
 }
 
 export let updateOrder = async (req:Request, res:Response) => {
-    const id = String(req.params.id)
+    const id = String(req.query.id)
     const update_order = req.body
     const result = await repository.update(id, update_order)
 
@@ -28,7 +28,7 @@ export let updateOrder = async (req:Request, res:Response) => {
 
 export let getAllOrder = async (req:Request, res:Response) => {
     const query = {}
-    const result = repository.find(query)
+    const result = await repository.find(query)
     
     if (!result) return createResponse(res,'Orders not found',undefined,404)
     return createResponse(res,"Orders Found",result,200)

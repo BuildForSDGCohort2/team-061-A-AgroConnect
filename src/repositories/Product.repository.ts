@@ -4,7 +4,7 @@ import { getModelForClass } from "@typegoose/typegoose";
 
 export class ProductRepository extends BaseRepository<Product>{
  
-    // model = getModelForClass(Product)
+    model = getModelForClass(Product)
 
     async getProductsByFarmer(id:any):Promise<Product[]|null> {
         try {
@@ -18,7 +18,10 @@ export class ProductRepository extends BaseRepository<Product>{
 
     async getProductsByCategory (Category:string[]):Promise<Product[]|null>{
         try {
-            const result = await this.model.find().populate("category","name").in("category.name",Category)
+            const result = await this.model.find({}).populate({
+                path:"category",
+                match:{"name":{$in:Category}}
+            })
             return result       
         } catch (error) {
             console.log(error)

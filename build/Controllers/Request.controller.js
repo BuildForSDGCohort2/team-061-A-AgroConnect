@@ -9,7 +9,7 @@ var __awaiter = (this && this.__awaiter) || function (thisArg, _arguments, P, ge
     });
 };
 Object.defineProperty(exports, "__esModule", { value: true });
-exports.getNRequests = exports.getRequests = exports.getRequestById = exports.getAllRequest = exports.updateRequest = exports.deleteRequest = exports.createRequest = void 0;
+exports.getRequestByTags = exports.getRequestByCustomer = exports.getOpenRequests = exports.getNRequests = exports.getRequests = exports.getRequestById = exports.getAllRequest = exports.updateRequest = exports.deleteRequest = exports.createRequest = void 0;
 const Request_repository_1 = require("../repositories/Request.repository");
 const Request_1 = require("../entities/Request");
 const Response_custom_1 = require("../Utils/Response.custom");
@@ -33,7 +33,7 @@ exports.deleteRequest = (req, res) => __awaiter(void 0, void 0, void 0, function
     return Response_custom_1.createResponse(res, "Request deleted", undefined, 200);
 });
 exports.updateRequest = (req, res) => __awaiter(void 0, void 0, void 0, function* () {
-    const id = String(req.params.id);
+    const id = String(req.query.id);
     const update_request = req.body;
     const result = yield repository.update(id, update_request);
     //Object to update
@@ -43,7 +43,7 @@ exports.updateRequest = (req, res) => __awaiter(void 0, void 0, void 0, function
 });
 exports.getAllRequest = (req, res) => __awaiter(void 0, void 0, void 0, function* () {
     const query = {};
-    const result = repository.find(query);
+    const result = yield repository.find(query);
     if (!result)
         return Response_custom_1.createResponse(res, 'Requests not found', undefined, 404);
     return Response_custom_1.createResponse(res, "Requests found", result, 200);
@@ -60,9 +60,15 @@ exports.getRequests = (req, res) => __awaiter(void 0, void 0, void 0, function* 
     //console.log(query)
     const result = yield repository.find(query);
     // console.log(Boolean(result))
-    if (!result)
-        return Response_custom_1.createResponse(res, 'Requests not found', undefined, 404);
-    return Response_custom_1.createResponse(res, "Requests found", result, 200);
+    if (result) {
+        if (result.length > 0) {
+            return Response_custom_1.createResponse(res, "Requests found", result, 200);
+        }
+        else {
+            return Response_custom_1.createResponse(res, "Request not found", undefined, 404);
+        }
+    }
+    return Response_custom_1.createResponse(res, "Bad request. Operation failed", undefined, 500);
 });
 exports.getNRequests = (req, res) => __awaiter(void 0, void 0, void 0, function* () {
     const query = req.body;
@@ -72,14 +78,49 @@ exports.getNRequests = (req, res) => __awaiter(void 0, void 0, void 0, function*
         const result = yield repository.findN(query, limit);
         // console.log(result)
         if (result) {
+            if (result.length > 0) {
+                return Response_custom_1.createResponse(res, "Requests found", result, 200);
+            }
+            else {
+                return Response_custom_1.createResponse(res, "Request not found", undefined, 404);
+            }
+        }
+        return Response_custom_1.createResponse(res, "Bad request. Operation failed", undefined, 500);
+    }
+    else {
+        return Response_custom_1.createResponse(res, "Parameter not found", undefined, 500);
+    }
+});
+exports.getOpenRequests = (req, res) => __awaiter(void 0, void 0, void 0, function* () {
+    const result = yield repository.getOpenRequests();
+    if (result) {
+        return Response_custom_1.createResponse(res, "Requests found", result, 200);
+    }
+    else {
+        return Response_custom_1.createResponse(res, "Operation failed", undefined, 500);
+    }
+});
+exports.getRequestByCustomer = (req, res) => __awaiter(void 0, void 0, void 0, function* () {
+    const customerid = req.query.id;
+    const result = yield repository.getRequestByCustomer(customerid);
+    if (result) {
+        return Response_custom_1.createResponse(res, "Requests found", result, 200);
+    }
+    else {
+        return Response_custom_1.createResponse(res, "Operation failed", undefined, 500);
+    }
+});
+exports.getRequestByTags = (req, res) => __awaiter(void 0, void 0, void 0, function* () {
+    const tags = req.body.tag;
+    const result = yield repository.getRequestByTags(tags);
+    if (result) {
+        if (result.length > 0) {
             return Response_custom_1.createResponse(res, "Requests found", result, 200);
         }
         else {
             return Response_custom_1.createResponse(res, "Request not found", undefined, 404);
         }
     }
-    else {
-        return Response_custom_1.createResponse(res, "Bad request. Operation failed", undefined, 500);
-    }
+    return Response_custom_1.createResponse(res, "Bad request. Operation failed", undefined, 500);
 });
 //# sourceMappingURL=Request.controller.js.map

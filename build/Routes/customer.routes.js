@@ -40,8 +40,8 @@ exports.Customer_Router.delete("/:id", customercontroller.deleteCustomer);
 exports.Customer_Router.post("/update", customercontroller.updateCustomer);
 //get host/customer/:id
 exports.Customer_Router.get("/find", customercontroller.getCustomerById);
-//post host/customer/:limit
-exports.Customer_Router.post("/:limit", customercontroller.getNCustomers);
-//post host/customer/
-exports.Customer_Router.post("/", customercontroller.getAllCustomers);
+//post host/customer/find
+exports.Customer_Router.post("/find", customercontroller.getAllCustomers);
+//post host/customer/find/:limit
+exports.Customer_Router.post("/find/:limit", customercontroller.getNCustomers);
 //# sourceMappingURL=customer.routes.js.map

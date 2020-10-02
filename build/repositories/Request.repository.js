@@ -52,8 +52,13 @@ class RequestRepository extends Base_repository_1.BaseRepository {
     }
     getRequestByCustomer(Customer) {
         return __awaiter(this, void 0, void 0, function* () {
-            const result = yield this.model.find({ customer: Customer });
-            return result;
+            try {
+                const result = yield this.model.find({ customer: Customer });
+                return result;
+            }
+            catch (error) {
+                return null;
+            }
         });
     }
 }

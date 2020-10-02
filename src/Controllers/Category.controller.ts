@@ -29,7 +29,7 @@ export let deleteCategory = async (req: Request, res: Response) => {
 }
 
 export let updateCategory = async (req: Request, res: Response) => {
-    const id = String(req.params.id)
+    const id = String(req.query.id)
     const updateCategory = req.body
     const result = await repository.update(id, updateCategory)
     if (result) {
@@ -41,7 +41,7 @@ export let updateCategory = async (req: Request, res: Response) => {
 
 export let getAllCategory = async (req: Request, res: Response) => {
     const query = {}
-    const result = repository.find(query)
+    const result = await repository.find(query)
     if (result) {
         return createResponse(res, "Categories found", result, 200)
     } else {

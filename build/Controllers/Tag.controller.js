@@ -17,7 +17,7 @@ const repository = new Tag_repository_1.TagRepository(Tag_1.TagModel);
 exports.createTag = (req, res) => __awaiter(void 0, void 0, void 0, function* () {
     const Tag = req.body;
     const result = yield repository.create(Tag);
-    if (result) {
+    if (!isNaN(Number(result))) {
         const newTag = yield repository.findOne({ _id: result });
         return Response_custom_1.createResponse(res, "Tag created", newTag, 200);
     }
@@ -34,7 +34,7 @@ exports.deleteTag = (req, res) => __awaiter(void 0, void 0, void 0, function* ()
     return Response_custom_1.createResponse(res, "Delete Operation Failed", undefined, 500);
 });
 exports.updateTag = (req, res) => __awaiter(void 0, void 0, void 0, function* () {
-    const id = String(req.params.id);
+    const id = String(req.query.id);
     const update_tag = req.body;
     const result = yield repository.update(id, update_tag);
     if (result) {
@@ -44,7 +44,7 @@ exports.updateTag = (req, res) => __awaiter(void 0, void 0, void 0, function* ()
 });
 exports.getAllTag = (req, res) => __awaiter(void 0, void 0, void 0, function* () {
     const query = {};
-    const result = repository.find(query);
+    const result = yield repository.find(query);
     if (result) {
         return Response_custom_1.createResponse(res, "Tags found", result, 200);
     }
@@ -64,9 +64,14 @@ exports.getTags = (req, res) => __awaiter(void 0, void 0, void 0, function* () {
     const result = yield repository.find(query);
     // console.log(Boolean(result))
     if (result) {
-        return Response_custom_1.createResponse(res, "Tags found", result, 200);
+        if (result.length > 0) {
+            return Response_custom_1.createResponse(res, "Tags found", result, 200);
+        }
+        else {
+            return Response_custom_1.createResponse(res, "Tags not found", undefined, 404);
+        }
     }
-    return Response_custom_1.createResponse(res, "Tags not found", undefined, 404);
+    return Response_custom_1.createResponse(res, "Bad request. Operation failed", undefined, 500);
 });
 exports.getNTags = (req, res) => __awaiter(void 0, void 0, void 0, function* () {
     const query = req.body;
@@ -74,11 +79,16 @@ exports.getNTags = (req, res) => __awaiter(void 0, void 0, void 0, function* () 
     if (req.params.limit != "") {
         const limit = Number(req.params.limit);
         const result = yield repository.findN(query, limit);
-        console.log(result);
+        // console.log(result)
         if (result) {
-            return Response_custom_1.createResponse(res, "Tags found", result, 200);
+            if (result.length > 0) {
+                return Response_custom_1.createResponse(res, "Tags found", result, 200);
+            }
+            else {
+                return Response_custom_1.createResponse(res, "Tags not found", undefined, 404);
+            }
         }
-        return Response_custom_1.createResponse(res, "Tags not found", undefined, 404);
+        return Response_custom_1.createResponse(res, "Bad request. Operation failed", undefined, 500);
     }
     else {
         return Response_custom_1.createResponse(res, "Parameter not found", undefined, 500);

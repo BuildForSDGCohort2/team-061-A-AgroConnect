@@ -1,4 +1,4 @@
-import {prop,Ref, getModelForClass, mongoose} from "@typegoose/typegoose"
+import {prop,Ref, getModelForClass, mongoose, pre} from "@typegoose/typegoose"
 import {Farmer} from './Farmer';
 import {Category} from './Category';
 export enum StatusEnum{
@@ -18,6 +18,7 @@ class Restock{
     @prop({type: String, enum:StatusEnum, required:true, default:"None"})
     public status!:StatusEnum
 }
+
 
 export class Product{
     @prop({required:true, ref:()=> Farmer,type:mongoose.Schema.Types.ObjectId})

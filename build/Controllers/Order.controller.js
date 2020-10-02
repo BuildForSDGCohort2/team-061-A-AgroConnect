@@ -9,7 +9,7 @@ var __awaiter = (this && this.__awaiter) || function (thisArg, _arguments, P, ge
     });
 };
 Object.defineProperty(exports, "__esModule", { value: true });
-exports.getNOrders = exports.getOrders = exports.getOrderById = exports.getAllOrder = exports.updateOrder = exports.deleteOrder = void 0;
+exports.CreateBulkOrder = exports.CreateSingleOrder = exports.getOrdersbyCustomer = exports.getOrdersbyFarmer = exports.getNOrders = exports.getOrders = exports.getOrderById = exports.getAllOrder = exports.updateOrder = exports.deleteOrder = void 0;
 const Order_repository_1 = require("../repositories/Order.repository");
 const Order_1 = require("../entities/Order");
 const Response_custom_1 = require("../Utils/Response.custom");
@@ -22,7 +22,7 @@ exports.deleteOrder = (req, res) => __awaiter(void 0, void 0, void 0, function* 
     return Response_custom_1.createResponse(res, "Order deleted", undefined, 200);
 });
 exports.updateOrder = (req, res) => __awaiter(void 0, void 0, void 0, function* () {
-    const id = String(req.params.id);
+    const id = String(req.query.id);
     const update_order = req.body;
     const result = yield repository.update(id, update_order);
     //Object to update
@@ -32,7 +32,7 @@ exports.updateOrder = (req, res) => __awaiter(void 0, void 0, void 0, function* 
 });
 exports.getAllOrder = (req, res) => __awaiter(void 0, void 0, void 0, function* () {
     const query = {};
-    const result = repository.find(query);
+    const result = yield repository.find(query);
     if (!result)
         return Response_custom_1.createResponse(res, 'Orders not found', undefined, 404);
     return Response_custom_1.createResponse(res, "Orders Found", result, 200);
@@ -50,12 +50,14 @@ exports.getOrders = (req, res) => __awaiter(void 0, void 0, void 0, function* ()
     const result = yield repository.find(query);
     // console.log(Boolean(result))
     if (result) {
-        // console.log("done")
-        return Response_custom_1.createResponse(res, "Orders found", result, 200);
+        if (result.length > 0) {
+            return Response_custom_1.createResponse(res, "Orders found", result, 200);
+        }
+        else {
+            return Response_custom_1.createResponse(res, "Orders not found", undefined, 404);
+        }
     }
-    else {
-        return Response_custom_1.createResponse(res, "Orders not found", undefined, 404);
-    }
+    return Response_custom_1.createResponse(res, "Bad request. Operation failed", undefined, 500);
 });
 exports.getNOrders = (req, res) => __awaiter(void 0, void 0, void 0, function* () {
     const query = req.body;
@@ -65,14 +67,60 @@ exports.getNOrders = (req, res) => __awaiter(void 0, void 0, void 0, function* (
         const result = yield repository.findN(query, limit);
         // console.log(result)
         if (result) {
-            return Response_custom_1.createResponse(res, "Orders found", result, 200);
+            if (result.length > 0) {
+                return Response_custom_1.createResponse(res, "Orders found", result, 200);
+            }
+            else {
+                return Response_custom_1.createResponse(res, "Orders not found", undefined, 404);
+            }
         }
-        else {
-            return Response_custom_1.createResponse(res, "Order not found", undefined, 404);
-        }
+        return Response_custom_1.createResponse(res, "Bad request. Operation failed", undefined, 500);
     }
     else {
         return Response_custom_1.createResponse(res, "Bad request. Operation failed", undefined, 500);
+    }
+});
+exports.getOrdersbyFarmer = (req, res) => __awaiter(void 0, void 0, void 0, function* () {
+    const farmerid = req.query.id;
+    const result = yield repository.getOrderByFarmer(farmerid);
+    if (result) {
+        return Response_custom_1.createResponse(res, "Orders found", result, 200);
+    }
+    else {
+        return Response_custom_1.createResponse(res, "Order not found", undefined, 404);
+    }
+});
+exports.getOrdersbyCustomer = (req, res) => __awaiter(void 0, void 0, void 0, function* () {
+    const customerid = req.query.id;
+    const result = yield repository.getOrderByCustomer(customerid);
+    if (result) {
+        return Response_custom_1.createResponse(res, "Orders found", result, 200);
+    }
+    else {
+        return Response_custom_1.createResponse(res, "Order not found", undefined, 404);
+    }
+});
+exports.CreateSingleOrder = (req, res) => __awaiter(void 0, void 0, void 0, function* () {
+    const request = req.body.request;
+    const bid = req.body.bid;
+    const customerid = req.query.customer;
+    const result = yield repository.createSingleOrder(request, bid, customerid);
+    if (result) {
+        return Response_custom_1.createResponse(res, "Order Successfully placed", result._id, 200);
+    }
+    else {
+        return Response_custom_1.createResponse(res, "Error occured during operation", undefined, 500);
+    }
+});
+exports.CreateBulkOrder = (req, res) => __awaiter(void 0, void 0, void 0, function* () {
+    const order = req.body;
+    const customerid = req.query.customer;
+    const result = yield repository.createBulkOrder(order, customerid);
+    if (result) {
+        return Response_custom_1.createResponse(res, "Order Successfully placed", result._id, 200);
+    }
+    else {
+        return Response_custom_1.createResponse(res, "Error occured during operation", undefined, 500);
     }
 });
 //# sourceMappingURL=Order.controller.js.map
